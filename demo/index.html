@@ -10,6 +10,8 @@
 <helmet>
 <link rel="stylesheet" href="../_ds/mintlify-design-system-a4c1b89a-6914-4f18-b165-234f93801aa4/tokens/fonts.css">
 <link rel="stylesheet" href="../_ds/mintlify-design-system-a4c1b89a-6914-4f18-b165-234f93801aa4/styles.css">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <title>Cultrich · AI Concierge Demo</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -370,7 +372,10 @@ class Component extends DCLogic {
 
   _hit(t, key) {
     if (key.indexOf(' ') >= 0) return t.indexOf(key) >= 0;
-    return new RegExp('\\b' + key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(t);
+    const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // tolerate simple plurals: 'hour' matches 'hours', 'rental' matches 'rentals'
+    const suf = key.length >= 3 ? '(?:s|es)?' : '';
+    return new RegExp('\\b' + esc + suf + '\\b').test(t);
   }
 
   _isUrgent(t) {
@@ -434,6 +439,9 @@ class Component extends DCLogic {
       return { text: p.yesReply || ("Great — what day and time work best for you? We're open " + p.daysShort + ", " + p.hoursShort + ", and I'll get you booked in."), awaitingHandoff: false };
     if (isNo)
       return { text: this._noReply(p), awaitingHandoff: false };
+    // Informal acknowledgments keep the flow instead of hitting the fallback
+    if (/^(cool|nice|awesome|great|sweet|perfect|love it|gotcha|got it|ok cool|okay cool|alright|aight|lol|haha|lmao|bet|word|fair enough|k|kk)[.!\s]*$/.test(t))
+      return { text: "\ud83d\ude0a Glad to hear it! Anything else I can help with" + (p.noBooking ? '?' : (" \u2014 or shall I book your " + p.noun + "?")), awaitingHandoff: false };
     // Urgent matters take priority over any booking parse
     if (this._isUrgent(t)) return { text: p.urgent.reply, awaitingHandoff: false };
     // E-commerce: a bare order number gets a fake tracking lookup
@@ -494,7 +502,7 @@ class Component extends DCLogic {
     const wellbeing = /(how are (you|u)|how'?re you|how r u|how (are )?you doing|how'?s it going|how'?s your (day|morning|afternoon|evening)|how is your day|how'?s everything|how'?ve you been|how have you been|hope (you'?re|you are|your day)|having a good day|nice to meet you)/.test(t);
     const weather = /(weather|raining|rainy|sunny|snowing|cloudy|humid|hot (out|today)|cold (out|today))/.test(t);
     const playful = /(tell me a joke|know any jokes|make me laugh|sing|favorite (color|colour|food|movie|song)|favourite (colour|food|movie|song)|meaning of life|are you real|are you a robot|are you human)/.test(t);
-    const casual = /(what'?s up|whats up|what up\b|wass?up|whaddup|whazz?up|\bsup\b|^yo[.!\s]*$)/.test(t);
+    const casual = /(what'?s up|whats up|what up\b|wass?up|whaddup|whazz?up|\bsup\b|^yo[.!\s]*$|what'?s good|whats good|what'?s new|whats new|what'?s happening|whats happening|how'?s life|hows life|what'?s poppin|whats poppin)/.test(t);
     if (wellbeing || weather || playful || casual) {
       this._smallTalk = (this._smallTalk || 0) + 1;
       if (this._smallTalk >= 3) return { text: p.UNMATCHED, awaitingHandoff: true };
