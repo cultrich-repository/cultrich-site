@@ -427,9 +427,19 @@ class Component extends DCLogic {
     const t = text.toLowerCase().trim();
     const isNo = /^(no|nope|nah|not now|no thanks|no thank you|maybe later|never ?mind|i'?m (good|fine|ok|okay)|nothing)[.!\s]*$/.test(t);
     if (!isNo) this._noCount = 0;
+    // After a handoff invite, treat name/number/email replies as contact details — not a new question
+    if (this._awaitingContact) {
+      this._awaitingContact = false;
+      const hasDigits = /\d{7,}/.test(t.replace(/[\s\-().]/g, ''));
+      const looksLikeDetails = hasDigits || t.indexOf('@') >= 0 || (!isNo && !/\?/.test(t) && t.split(/\s+/).length <= 6);
+      if (looksLikeDetails)
+        return { text: "Perfect \u2014 thanks! \u2705 I've passed your details to the " + p.brand + " team and someone will follow up shortly. Anything else I can help with in the meantime?", awaitingHandoff: false };
+    }
     if (this.state.awaitingHandoff) {
-      if (/\b(yes|yeah|yep|sure|ok|okay|please|connect|human|person|agent|someone)\b/.test(t))
+      if (/\b(yes|yeah|yep|sure|ok|okay|please|connect|human|person|agent|someone)\b/.test(t)) {
+        this._awaitingContact = true;
         return { text: p.HANDOFF, awaitingHandoff: false };
+      }
       if (/\b(no|nope|nah|never ?mind)\b/.test(t))
         return { text: this._noReply(p), awaitingHandoff: false };
       // otherwise fall through and try to answer the new question
@@ -494,6 +504,7 @@ class Component extends DCLogic {
         return { text: "Perfect — noted! \u2705 I've passed those details to the " + p.brand + " team. Want me to lock in your " + p.noun + "? Just tell me a day and time.", awaitingHandoff: false };
       }
       this._lastIntent = best;
+      if (best.reply === p.HANDOFF) this._awaitingContact = true;
       return { text: best.reply, awaitingHandoff: false };
     }
     this._lastIntent = null;

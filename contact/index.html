@@ -352,6 +352,7 @@ h2{font-size:30px!important;letter-spacing:-0.6px!important}
         <a href="../services/?svc=1" style="font-size:14px;color:rgba(255,255,255,0.52)">SEO &amp; Analytics</a>
         <a href="../services/?svc=2" style="font-size:14px;color:rgba(255,255,255,0.52)">Brand Identity</a>
         <a href="../services/?svc=3" style="font-size:14px;color:rgba(255,255,255,0.52)">AI Chatbot</a>
+        <a href="../services/?svc=4" style="font-size:14px;color:rgba(255,255,255,0.52)">Booking Systems</a>
         <a href="../services/#retainer" style="font-size:14px;color:rgba(255,255,255,0.52)">Monthly Retainer</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:14px">
@@ -514,6 +515,7 @@ class Component extends DCLogic {
       }
       // Confirmation banner above the form
       const note = document.createElement('div');
+      note.id = 'cc-prefill-note';
       note.style.cssText = 'display:flex;align-items:center;gap:9px;background:rgba(0,212,164,0.08);border:1px solid rgba(0,212,164,0.28);border-radius:10px;padding:12px 14px;margin-bottom:22px;font-size:13px;color:#00D4A4;line-height:1.4';
       note.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Prefilled from your estimate — just add your details below.</span>';
       form.parentNode.insertBefore(note, form);
@@ -573,6 +575,7 @@ class Component extends DCLogic {
       if (h2) h2.textContent = 'Tell us about your website';
       // Confirmation banner
       const note = document.createElement('div');
+      note.id = 'cc-prefill-note';
       note.style.cssText = 'display:flex;align-items:center;gap:9px;background:rgba(0,212,164,0.08);border:1px solid rgba(0,212,164,0.28);border-radius:10px;padding:12px 14px;margin-bottom:22px;font-size:13px;color:#00D4A4;line-height:1.4';
       note.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Free Web Audit \u2014 no budget needed, just your website URL below.</span>';
       form.parentNode.insertBefore(note, form);
@@ -668,6 +671,8 @@ class Component extends DCLogic {
         const out = await res.json();
         if (res.ok && out.success) {
           form.style.display = 'none';
+          const pn = document.getElementById('cc-prefill-note');
+          if (pn) pn.style.display = 'none';
           if (success) success.style.display = 'flex';
         } else {
           showError((out && out.message) || 'Something went wrong. Please try again or email us directly.');
@@ -730,6 +735,8 @@ class Component extends DCLogic {
         form.reset();
         if (success) success.style.display = 'none';
         form.style.display = 'flex';
+        const pn2 = document.getElementById('cc-prefill-note');
+        if (pn2) pn2.remove();
         setLoading(false);
       });
     }
