@@ -997,7 +997,16 @@ class Component extends DCLogic {
           ? keepIdx : (inGroup[0] ? +inGroup[0].dataset.svc : 0);
         activateSvc(want);
       };
-      svcTabs.forEach(t => t.addEventListener('click', () => activateSvc(+t.dataset.svc)));
+      svcTabs.forEach(t => t.addEventListener('click', () => {
+        activateSvc(+t.dataset.svc);
+        if (window.innerWidth <= 960) {
+          const p = svcPanels.find(x => x.classList.contains('active'));
+          if (p) {
+            const y = p.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+          }
+        }
+      }));
       svcGroups.forEach(b => {
         b.addEventListener('click', () => showGroup(b.dataset.group));
         b.addEventListener('mouseenter', () => { if (b.dataset.group !== curGroup) { b.style.background = 'rgba(255,255,255,0.08)'; b.style.color = '#fff'; } });

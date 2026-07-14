@@ -930,7 +930,16 @@ class Component extends DCLogic {
       });
     };
     tabs.forEach((t, k) => {
-      t.addEventListener('click', () => { active = k; paint(); });
+      t.addEventListener('click', () => {
+        active = k; paint();
+        if (window.innerWidth <= 880) {
+          const p = panels[active];
+          if (p) {
+            const y = p.getBoundingClientRect().top + window.pageYOffset - 84;
+            window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+          }
+        }
+      });
       t.addEventListener('mouseenter', () => { if (k !== active) { t.style.background = 'rgba(255,255,255,0.08)'; t.style.color = '#fff'; } });
       t.addEventListener('mouseleave', () => { if (k !== active) { t.style.background = 'rgba(255,255,255,0.04)'; t.style.color = 'rgba(255,255,255,0.7)'; } });
     });

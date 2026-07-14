@@ -29,7 +29,7 @@ a:hover{color:#00A884}
 .ccd-head{grid-column:1;grid-row:1;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:#00D4A4;padding:0 2px 10px}
 .ccd-rail{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:8px;justify-content:space-between;min-height:0}
 .ccd-chat{grid-column:2;grid-row:2}
-@media(max-width:880px){.ccd-grid{grid-template-columns:1fr;grid-template-rows:auto}.ccd-head{grid-column:1;grid-row:auto}.ccd-rail{grid-column:1;grid-row:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.ccd-chat{grid-column:1;grid-row:auto;margin-top:22px}.ccd-rail button span span{white-space:normal!important}}
+@media(max-width:880px){.ccd-grid{grid-template-columns:1fr;grid-template-rows:auto}.ccd-head{grid-column:1;grid-row:auto}.ccd-rail{grid-column:1;grid-row:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.ccd-chat{grid-column:1;grid-row:auto;order:-1;margin-top:0}.ccd-head{order:1;margin-top:26px}.ccd-rail{order:2}.ccd-rail button span span{white-space:normal!important}}
 @media(max-width:600px){#cc-chat-msgs{height:min(340px,44vh)!important}}
 </style>
 </helmet>
@@ -357,6 +357,13 @@ class Component extends DCLogic {
     this._smallTalk = 0;
     const p = this.PACKS[i];
     this.setState({ ind: i, messages: [{ role: 'bot', text: p.greeting }], pending: false, awaitingHandoff: false, locked: false });
+    if (window.innerWidth <= 880) {
+      const card = document.getElementById('cc-chat-msgs');
+      if (card) {
+        const y = card.getBoundingClientRect().top + window.pageYOffset - 170;
+        window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+      }
+    }
     try {
       const u = new URL(location.href);
       u.searchParams.set('industry', p.id);
