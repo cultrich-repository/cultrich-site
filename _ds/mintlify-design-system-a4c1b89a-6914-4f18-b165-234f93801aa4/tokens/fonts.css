@@ -1,0 +1,13 @@
+/* ============================================================
+   Mintlify — Webfonts
+   Inter (UI prose) + Geist Mono (code) — the brand's full
+   typeface system. Loaded via Google Fonts CDN.
+
+   NOTE: These are linked from the Google Fonts CDN rather than
+   self-hosted binaries (no font files were provided). If you
+   want self-hosted woff2 files for production, drop them in
+   assets/fonts/ and replace these @import lines with @font-face
+   rules pointing at them.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');

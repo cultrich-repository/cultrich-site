@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="../_ds/mintlify-design-system-a4c1b89a-6914-4f18-b165-234f93801aa4/tokens/fonts.css">
+<link rel="stylesheet" href="../_ds/mintlify-design-system-a4c1b89a-6914-4f18-b165-234f93801aa4/styles.css">
+<title>Cultrich · AI Concierge Demo</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0A0D13;color:#fff;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:#00D4A4;text-decoration:none}
+a:hover{color:#00A884}
+#cc-chat-msgs::-webkit-scrollbar{width:6px}
+#cc-chat-msgs::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:9999px}
+@keyframes ccDot{0%,60%,100%{opacity:0.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.cc-typing span{display:inline-block;width:6px;height:6px;border-radius:9999px;background:rgba(255,255,255,0.6);margin:0 2px;animation:ccDot 1.1s infinite}
+.cc-typing span:nth-child(2){animation-delay:.15s}
+.cc-typing span:nth-child(3){animation-delay:.3s}
+.cc-chip:hover{border-color:rgba(0,212,164,0.5)!important;color:#fff!important}
+.ccd-grid{display:grid;grid-template-columns:260px minmax(0,1fr);grid-template-rows:auto 1fr;gap:0 22px;align-items:stretch}
+.ccd-head{grid-column:1;grid-row:1;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:#00D4A4;padding:0 2px 10px}
+.ccd-rail{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:8px;justify-content:space-between;min-height:0}
+.ccd-chat{grid-column:2;grid-row:2}
+@media(max-width:880px){.ccd-grid{grid-template-columns:1fr;grid-template-rows:auto}.ccd-head{grid-column:1;grid-row:auto}.ccd-rail{grid-column:1;grid-row:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.ccd-chat{grid-column:1;grid-row:auto;margin-top:22px}.ccd-rail button span span{white-space:normal!important}}
+@media(max-width:600px){#cc-chat-msgs{height:min(340px,44vh)!important}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 24px;background:radial-gradient(circle at 50% 0%,rgba(0,212,164,0.06) 0%,transparent 55%),#0A0D13">
+  <div style="width:100%;max-width:1020px">
+    <div style="margin-bottom:18px">
+      <a href="../services/" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:9999px;padding:8px 16px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.75);text-decoration:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg> Back to services</a>
+    </div>
+    <div style="text-align:center;margin-bottom:28px">
+      <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(0,212,164,0.08);border:1px solid rgba(0,212,164,0.2);border-radius:9999px;padding:5px 14px;font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;color:#00D4A4;margin-bottom:16px"><span style="width:7px;height:7px;border-radius:9999px;background:#00D4A4"></span>Interactive demo</span>
+      <h1 style="font-size:28px;font-weight:600;letter-spacing:-0.6px;margin-bottom:10px">Meet your AI Concierge</h1>
+      <p style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.6;max-width:460px;margin:0 auto">Pick your industry, then chat — every response adapts to that business. On your live site, the same assistant answers on Instagram, WhatsApp &amp; SMS too.</p>
+    </div>
+
+    <div class="ccd-grid">
+      <!-- industry rail -->
+      <div class="ccd-head">Try your industry</div>
+      <div class="ccd-rail">
+        <sc-for list="{{ inds }}" as="ind" hint-placeholder-count="8">
+          <button type="button" onClick="{{ ind.pick }}" style="{{ ind.style }}">
+            <span style="{{ ind.monoStyle }}">{{ ind.mono }}</span>
+            <span style="display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left">
+              <span style="{{ ind.labelStyle }}">{{ ind.label }}</span>
+              <span style="font-size:11.5px;color:rgba(255,255,255,0.38);white-space:nowrap">{{ ind.brand }}</span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+
+      <!-- chat -->
+      <div class="ccd-chat">
+        <div style="background:#12161D;border:1px solid rgba(255,255,255,0.1);border-radius:20px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,0.5)">
+          <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:#161B22;border-bottom:1px solid rgba(255,255,255,0.07)">
+            <span style="position:relative;width:40px;height:40px;border-radius:9999px;background:rgba(0,212,164,0.14);display:flex;align-items:center;justify-content:center;color:#00D4A4;flex-shrink:0;font-size:13px;font-weight:700">
+              {{ assistantInitial }}
+              <span style="position:absolute;bottom:0;right:0;width:11px;height:11px;border-radius:9999px;background:#00D4A4;border:2px solid #161B22"></span>
+            </span>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:600">{{ brand }}</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.45)">{{ assistantLine }}</div>
+            </div>
+            <a href="../services/" aria-label="Exit demo" style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.35);text-decoration:none;flex-shrink:0"><span style="font-size:11px">Powered by Cultrich</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></a>
+          </div>
+
+          <div id="cc-chat-msgs" style="height:360px;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="2">
+              <div style="{{ m.row }}">
+                <div style="{{ m.bubble }}">{{ m.text }}</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ pending }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;justify-content:flex-start">
+                <div class="cc-typing" style="background:rgba(255,255,255,0.06);padding:12px 16px;border-radius:14px;border-bottom-left-radius:4px"><span></span><span></span><span></span></div>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 4px">
+            <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="3">
+              <button type="button" class="cc-chip" onClick="{{ chip.go }}" style="font-size:12.5px;font-weight:500;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:9999px;padding:7px 13px;cursor:pointer;transition:all .16s ease">{{ chip.label }}</button>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:16px 20px 20px">
+            <input id="cc-chat-input" type="text" placeholder="{{ placeholder }}" onKeyDown="{{ onKey }}" style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:9999px;padding:12px 18px;font-family:inherit;font-size:14px;color:#fff;outline:none">
+            <button type="button" onClick="{{ send }}" aria-label="Send" style="width:44px;height:44px;flex-shrink:0;border-radius:9999px;border:none;background:#00D4A4;color:#0D1117;display:flex;align-items:center;justify-content:center;cursor:pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:12px;color:rgba(255,255,255,0.3);margin-top:18px">Demo assistant for {{ footerNoun }} · every client's concierge gets a custom name &amp; personality · built by Cultrich Concepts</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:800},&quot;defaultIndustry&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dental&quot;,&quot;realestate&quot;,&quot;financial&quot;,&quot;law&quot;,&quot;hvac&quot;,&quot;coach&quot;,&quot;ecom&quot;,&quot;saas&quot;],&quot;default&quot;:&quot;dental&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.PACKS = this._buildPacks();
+    let def = null;
+    try { def = new URLSearchParams(location.search).get('industry'); } catch (e) {}
+    def = def || this.props.defaultIndustry || 'dental';
+    let idx = this.PACKS.findIndex(p => p.id === def);
+    if (idx < 0) idx = 0;
+    this._session = 0;
+    this.state = {
+      ind: idx,
+      messages: [{ role: 'bot', text: this.PACKS[idx].greeting }],
+      pending: false,
+      awaitingHandoff: false,
+      locked: false
+    };
+  }
+
+  get P() { return this.PACKS[this.state.ind]; }
+
+  _buildPacks() {
+    const packs = [
+      {
+        id: 'dental', label: 'Dental Clinic', brand: 'Pacific Dental', assistant: 'Mia', mono: 'PD',
+        noun: 'appointment', phone: '(555) 012-3456',
+        openMin: 600, closeMin: 1020, hoursShort: '10am\u20135pm', daysShort: 'Monday to Saturday', closedDays: ['sunday'],
+        footer: 'a sample dental clinic',
+        placeholder: 'Ask about bookings, hours, services\u2026',
+        greeting: "Hi! \ud83d\udc4b I'm Mia, Pacific Dental's AI concierge. I can answer questions about our services, hours and insurance — or get you booked in. What can I help with today?",
+        chips: ['Book an appointment', 'Do you take my insurance?', 'What are your hours?', 'I have a toothache'],
+        hiReply: "Hi there! \ud83d\udc4b How can I help — booking a visit, our hours, services, or insurance?",
+        urgent: { keys: ['emergency','urgent','toothache','tooth ache','severe pain','in pain','knocked out','bleeding','swollen','swelling','broke a tooth','broken tooth','chipped','it hurts','really hurts','asap','right now'],
+          reply: "I'm sorry you're in pain — dental emergencies are our priority. Please call us right away at (555) 012-3456 and we'll see you as soon as possible, often the same day." },
+        intents: [
+          { keys: ['book','appointment','appt','schedule','booking','reserve','availability','available','slot','come in','see the dentist','get in'], reply: "I'd be happy to get you booked in! We have openings Monday\u2013Saturday. What day and time work best, and is this for a check-up, cleaning, or something specific?" },
+          { keys: ['insurance','insured','coverage','cover','claim','ppo','hmo','delta','cigna','aetna','provider'], reply: "Yes — we accept most major insurance plans, and our front desk will help verify your coverage before your visit. Which provider are you with?" },
+          { keys: ['cost','price','pricing','how much','fee','charge','expensive','afford','payment plan','financing','instalment','installment'], reply: "Costs depend on the treatment, but we're always upfront about pricing before anything begins — and we offer flexible payment plans. Would you like a quote for a specific service?" },
+          { keys: ['clean','cleaning','check-up','checkup','check up','hygiene','scale','polish','routine'], reply: "A routine check-up and cleaning is our most popular visit — a full exam, professional cleaning, and personalized advice. Want me to find you a time?" },
+          { keys: ['whiten','whitening','brighten','stain','yellow','cosmetic'], reply: "We offer professional teeth whitening that's far more effective than over-the-counter kits — most patients see several shades of improvement in one visit. Shall I book you a consultation?" },
+          { keys: ['invisalign','align','braces','straighten','crooked','orthodontic','aligner'], reply: "We provide Invisalign clear aligners to straighten teeth discreetly — no metal braces. It starts with a quick consultation and scan. Would you like to schedule one?" },
+          { keys: ['implant','missing tooth','replace a tooth','false teeth','denture'], reply: "Dental implants are a permanent, natural-looking way to replace missing teeth, starting with a consultation to see if they're right for you. Want me to set that up?" },
+          { keys: ['root canal','filling','cavity','decay','crown','extraction','pull a tooth','wisdom tooth'], reply: "We handle fillings, crowns, root canals and extractions with a focus on keeping you comfortable throughout. Would you like to book an assessment?" },
+          { keys: ['kid','child','children','pediatric','paediatric','son','daughter','family','toddler','baby'], reply: "Absolutely — we're a family-friendly practice and welcome patients of all ages, including little ones. Would you like to book a family or children's visit?" },
+          { keys: ['where','location','address','located','directions','parking','park','find you','map'], reply: "We're in the downtown area with free patient parking right at the clinic. Would you like me to send you the full address?" },
+          { keys: ['new patient','first time','first visit','register','sign up','never been'], reply: "Welcome! New patients are always warmly received — your first visit includes a full exam and a chat about your goals. What day would suit you to come in?" },
+          { keys: ['cancel','reschedule','change my appointment','move my appointment','postpone'], reply: "No problem — I can help you reschedule. What's the name on the appointment and the new day that works for you?" },
+          { keys: ['covid','sanitize','sanitise','steriliz','sterilise','safety protocol','ppe','mask'], reply: "Your safety matters to us — we follow strict sterilization and hygiene protocols throughout the clinic. Is there anything else I can help with?" },
+          { keys: ['post-surgery','post surgery','after surgery','after my surgery','after the procedure','after my procedure','back job','redo','re-do','damaged after','didnt heal',"didn't heal",'still hurts after','filling fell out','crown fell off','crown came off','complication','follow-up issue','follow up issue'], reply: "I'm so sorry to hear that — issues after treatment are exactly what we want to see right away. I've flagged this as a priority follow-up ticket #PD-2210 and directed it to our clinical team. \u2705 They'll call to get you back in quickly, and the review visit is at no charge. What's the best number to reach you?" }
+        ]
+      },
+      {
+        id: 'realestate', label: 'Real Estate', brand: 'Harborline Realty', assistant: 'Ava', mono: 'HR',
+        noun: 'viewing', phone: '(555) 014-7788',
+        openMin: 540, closeMin: 1080, hoursShort: '9am\u20136pm', daysShort: 'Monday to Saturday', closedDays: ['sunday'],
+        footer: 'a sample real estate agency',
+        placeholder: 'Ask about listings, viewings, valuations\u2026',
+        greeting: "Hi! \ud83d\udc4b I'm Ava, Harborline Realty's AI concierge. Looking to buy, sell, or rent? I can arrange viewings, book a free home valuation, or answer questions about our listings. How can I help?",
+        chips: ['Book a viewing', "What's my home worth?", 'Do you have rentals?', 'What areas do you cover?'],
+        hiReply: "Hi there! \ud83d\udc4b How can I help — booking a viewing, a free valuation, or finding your next home?",
+        urgent: null,
+        intents: [
+          { keys: ['viewing','tour','see the property','open house','visit the property','showing','walkthrough','walk-through','book'], reply: "I'd love to set up a private viewing for you. Which property caught your eye, and what day works best? We show homes Monday to Saturday, 9am\u20136pm." },
+          { keys: ['sell','selling','valuation','home worth','house worth','appraisal','list my','market value'], reply: "We offer a free, no-obligation home valuation — one of our agents reviews recent sales in your area and gives you a realistic price range. Want me to book yours?" },
+          { keys: ['buy','buying','looking for','house','condo','apartment','townhouse','bedroom','listing','listings','property','properties'], reply: "Great — tell me a little about what you're after: which area, what budget, and how many bedrooms? I'll match you with current listings and set up new-listing alerts." },
+          { keys: ['rent','rental','lease','tenant','renting'], reply: "We manage rentals across the metro area. What's your monthly budget and ideal move-in date? I'll shortlist options for you." },
+          { keys: ['mortgage','pre-approval','preapproval','pre approved','financing','loan','lender'], reply: "We work with trusted local lenders who can get you pre-approved quickly — often within 24 hours. Would you like an introduction?" },
+          { keys: ['commission','fees','fee','cost','price','how much','charge'], reply: "Our commission is discussed transparently at your listing consultation — no upfront fees, and you only pay when your home sells. Want to book a consult?" },
+          { keys: ['area','areas','neighborhood','neighbourhood','cover','service area','where do you','where are you'], reply: "We cover the greater metro area, from the downtown core to the surrounding suburbs. Which neighborhood are you interested in?" },
+          { keys: ['first time','first-time','never bought','first home'], reply: "Buying your first home is a big step — we'll walk you through every stage, from pre-approval to keys in hand. Want to start with a quick call with an agent?" }
+        ]
+      },
+      {
+        id: 'financial', label: 'Financial & Insurance', brand: 'Meridian Wealth & Insurance', assistant: 'Claire', mono: 'MW',
+        noun: 'consultation', phone: '(555) 016-2244',
+        openMin: 540, closeMin: 1020, hoursShort: '9am\u20135pm', daysShort: 'Monday to Friday', closedDays: ['saturday','sunday'],
+        footer: 'a sample financial & insurance agency',
+        placeholder: 'Ask about consultations, coverage, planning\u2026',
+        greeting: "Hello! \ud83d\udc4b I'm Claire, the AI concierge for Meridian Wealth & Insurance. I can book a free consultation, arrange a coverage review, or answer questions about our advisory services. How can I help?",
+        chips: ['Book a free consultation', 'Review my coverage', 'Help me plan retirement', 'What are your fees?'],
+        hiReply: "Hi there! \ud83d\udc4b How can I help — a free consultation, a coverage review, or a planning question?",
+        urgent: null,
+        intents: [
+          { keys: ['consult','consultation','meet','meeting','review','appointment','sit down','advisor','adviser','book'], reply: "I'd be glad to set up a free 30-minute intro consultation — no pressure, just a conversation about your goals. What day works for you? We meet Monday to Friday, 9am\u20135pm." },
+          { keys: ['retire','retirement','401k','401(k)','pension','ira','superannuation'], reply: "Retirement planning is one of our core services — we map your income needs, your timeline, and the smartest way to get there. Would you like to book a free consultation?" },
+          { keys: ['insurance','life insurance','coverage','policy','premium','term life','whole life','disability'], reply: "We offer life, disability, home and auto coverage — and we start with a free review of what you already have, so you never pay for overlap. Want me to schedule a coverage review?" },
+          { keys: ['invest','investment','portfolio','stocks','funds','etf','wealth','returns'], reply: "Our investment advisory starts with your risk comfort and goals — not products. A free intro consultation is the best first step. Shall I book one?" },
+          { keys: ['tax','taxes','deduction'], reply: "We build tax-efficient strategies and coordinate directly with your accountant so nothing falls through the cracks. Want to discuss it in a free consultation?" },
+          { keys: ['fee','fees','cost','how much','charge','commission','pricing'], reply: "We're fully transparent: fees are explained upfront before you commit to anything, and the intro consultation is always free. Would you like to book one?" },
+          { keys: ['estate','will','trust','inheritance','beneficiary'], reply: "We handle estate planning alongside partner attorneys — wills, trusts, and beneficiary reviews. Want to start with a consultation?" },
+          { keys: ['claim','file a claim','make a claim'], reply: "I'm sorry you're dealing with that — I can help you start your claim right away. Please call us at (555) 016-2244 and a specialist will walk you through it, usually the same day." },
+          { keys: ['fiduciary','licensed','credentials','trust you','regulated','certified'], reply: "Yes — our advisors are fully licensed and act as fiduciaries, meaning we're legally bound to put your interests first. Anything else I can clarify?" }
+        ]
+      },
+      {
+        id: 'law', label: 'Law Firm', brand: 'Summit & Rowe Law', assistant: 'Grace', mono: 'SR',
+        noun: 'consultation', phone: '(555) 018-9900',
+        openMin: 540, closeMin: 1080, hoursShort: '9am\u20136pm', daysShort: 'Monday to Friday', closedDays: ['saturday','sunday'],
+        footer: 'a sample law firm',
+        placeholder: 'Ask about consultations, practice areas, fees\u2026',
+        greeting: "Hello! \ud83d\udc4b I'm Grace, the AI concierge for Summit & Rowe Law. I can schedule a free, confidential case evaluation or answer questions about our practice areas and fees. How can I help you today?",
+        chips: ['Book a free consultation', 'What areas of law?', 'Is my case confidential?', 'How do fees work?'],
+        hiReply: "Hi there! \ud83d\udc4b How can I help — a free case evaluation, our practice areas, or a question about fees?",
+        urgent: { keys: ['arrested','arrest','in custody','court date','court tomorrow','deadline','served','summons','police','urgent'],
+          reply: "That sounds time-sensitive — please call our urgent line right away at (555) 018-9900 so an attorney can advise you today. Legal deadlines can move fast, and we don't want you to miss one." },
+        intents: [
+          { keys: ['consult','consultation','case review','evaluate','evaluation','speak to a lawyer','talk to a lawyer','attorney','lawyer','book'], reply: "We offer a free, confidential case evaluation. Can you tell me briefly what kind of matter it is — family, injury, business, or estate — and what day suits you to speak with an attorney?" },
+          { keys: ['practice','areas of law','what law','type of law','handle','specialize','specialise','areas'], reply: "Summit & Rowe practices family law, personal injury, business law, and estate planning. Which area does your matter fall under?" },
+          { keys: ['injury','accident','crash','slip','hurt','compensation','negligence'], reply: "I'm sorry to hear that. Our personal injury team works on a no-win, no-fee basis, and the case evaluation is free. Would you like me to schedule one?" },
+          { keys: ['divorce','custody','separation','family law','spouse','alimony','child support'], reply: "Family matters deserve both discretion and care — our family law team handles divorce, custody and support with exactly that. Want to book a confidential consultation?" },
+          { keys: ['business','contract','llc','incorporat','partnership','dispute'], reply: "Our business team handles contracts, formations, and disputes for companies of every size. Shall I set up a consultation?" },
+          { keys: ['estate','will','trust','probate','inheritance'], reply: "We prepare wills and trusts and handle probate — giving your family clarity when it matters most. Want to book an estate planning consultation?" },
+          { keys: ['confidential','privacy','private','privilege','anyone know'], reply: "Absolutely — everything you share is protected by attorney-client privilege from your very first consultation. Would you like to schedule one?" },
+          { keys: ['fee','fees','cost','retainer','charge','hourly','how much','contingency','pricing'], reply: "Your first consultation is free, and before we take your case we explain the fee structure clearly — flat, hourly, or contingency depending on the matter. No surprises. Want to book that first chat?" }
+        ]
+      },
+      {
+        id: 'hvac', label: 'HVAC & Home Services', brand: 'TrueFlow Heating & Air', assistant: 'Max', mono: 'TF',
+        noun: 'service visit', phone: '(555) 013-4411',
+        openMin: 480, closeMin: 1080, hoursShort: '8am\u20136pm', daysShort: 'Monday to Saturday', closedDays: ['sunday'],
+        footer: 'a sample HVAC company',
+        placeholder: 'Ask about repairs, installs, maintenance\u2026',
+        greeting: "Hi! \ud83d\udc4b I'm Max, TrueFlow Heating & Air's AI concierge. AC trouble, heating issues, or time for a tune-up? I can book a technician, get you a free install estimate, or help in an emergency — 24/7. What's going on?",
+        chips: ['Book a service visit', "My AC isn't cooling", 'Maintenance plans', 'Get a free estimate'],
+        hiReply: "Hi there! \ud83d\udc4b How can I help — a repair visit, a free estimate, or a maintenance plan?",
+        hoursReply: "Our office runs Monday to Saturday, 8am\u20136pm — but our emergency line at (555) 013-4411 answers 24/7. Want me to book a visit?",
+        urgent: { keys: ['gas leak','smell gas','carbon monoxide','burning smell','sparks','smoke','no heat','no heating','furnace died','freezing','flooding','water everywhere','emergency','urgent'],
+          reply: "That's exactly what our 24/7 emergency line is for — please call (555) 013-4411 right now and a technician will be dispatched immediately. \u26a0\ufe0f If you smell gas, leave the house first and call your gas utility's emergency number before anything else." },
+        intents: [
+          { keys: ['book','technician','service visit','come out','send someone','schedule','visit','appointment'], reply: "I can get a technician out to you — we offer morning (8\u201312) and afternoon (12\u20136) windows, Monday to Saturday. Which works better, and what's the issue?" },
+          { keys: ['not cooling','isnt cooling','blowing warm','blowing hot','ac not','a/c','air conditioner','air conditioning','not cold','ac is'], reply: "Sorry to hear that — a warm-blowing AC usually needs a professional look, and our techs carry the common parts on the truck. Want me to book a diagnostic visit? The fee is credited toward any repair." },
+          { keys: ['heat','furnace','heater','boiler','heat pump','not heating','radiator'], reply: "We service and repair all major furnace and heat pump brands. Is it not heating at all, or just underperforming? If you have no heat right now, call our 24/7 line at (555) 013-4411." },
+          { keys: ['install','replace','new unit','new system','new ac','upgrade','replacement'], reply: "We do full installs and replacements, and the in-home estimate is free — we'll size the right system for your home and give you a fixed quote. Want to book an estimate?" },
+          { keys: ['maintenance','tune-up','tune up','plan','membership','filter','seasonal','service plan'], reply: "Our seasonal maintenance plan includes two tune-ups a year, priority scheduling, and discounts on repairs — the cheapest way to avoid emergency breakdowns. Want the details, or shall I book your first tune-up?" },
+          { keys: ['quote','estimate','cost','price','how much','charge','fee','pricing'], reply: "Estimates for new installs are free, and diagnostic visits have a flat fee that's credited toward the repair. Would you like me to book one?" },
+          { keys: ['duct','airflow','air flow','vent','ventilation','air quality','dusty'], reply: "We handle duct cleaning, sealing, and airflow balancing — great for uneven rooms and dusty air. Want a technician to take a look?" },
+          { keys: ['thermostat','smart thermostat','nest','ecobee'], reply: "We install and configure smart thermostats — most customers save noticeably on their energy bill. Want to add one to a visit?" },
+          { keys: ['warranty','guarantee'], reply: "All our work is backed by a parts-and-labor warranty, and we service what we install. Anything else I can help with?" },
+          { keys: ['refund','money back','overcharge','overcharged','billing issue','dispute a charge','charged twice','wrong charge'], reply: "Sorry about that — I've submitted your refund request as ticket #TF-5028 and directed it to our Billing & Accounts team. \u2705 You'll get an email confirmation shortly and a call from the office within 1 business day. Anything else I can help with?" },
+          { keys: ["didn't fix",'didnt fix','broke again','broken again','still not working','still broken','not fixed','same problem','happening again','after your visit','after the repair','after the technician','callback','call back','came back'], reply: "I'm sorry it's acting up again — repeat issues after a visit go straight to the top of the queue under our workmanship warranty. I've opened priority callback ticket #TF-6114 and directed it to dispatch. \u2705 A technician will come back out at no extra charge — what's the best number to reach you?" }
+        ]
+      },
+      {
+        id: 'coach', label: 'Online Coach', brand: 'Ascend Coaching', assistant: 'Kai', mono: 'AC',
+        noun: 'discovery call', phone: null,
+        openMin: 540, closeMin: 1140, hoursShort: '9am\u20137pm', daysShort: 'Monday to Friday', closedDays: ['saturday','sunday'],
+        footer: 'a sample online coach',
+        placeholder: 'Ask about programs, pricing, discovery calls\u2026',
+        greeting: "Hey! \ud83d\udc4b I'm Kai, the AI concierge for Ascend Coaching with Dana Cole. Curious about the programs, pricing, or whether coaching is right for you? I can answer questions or book your free discovery call. What would you like to know?",
+        chips: ['Book a discovery call', 'What programs are there?', 'How much is coaching?', 'Will it work for me?'],
+        hiReply: "Hi there! \ud83d\udc4b How can I help — programs, pricing, or booking a free discovery call?",
+        phoneReply: "The easiest way to reach us is right here in chat, or by email at hello@ascendcoaching.co. Want me to book you a free discovery call instead?",
+        urgent: null,
+        intents: [
+          { keys: ['discovery call','book','call','session','schedule','appointment','free call','sign up'], reply: "Love it — the free 20-minute discovery call is the best place to start. Dana will learn your goals and tell you honestly whether the program's a fit. What day works for you? Calls run Monday to Friday, 9am\u20137pm." },
+          { keys: ['program','programs','offer','package','work with','coaching options','options'], reply: "There are three ways to work with Dana: 12-week 1:1 coaching, the small-group Momentum program, and a self-paced course. The discovery call helps pick the right one — want to book it?" },
+          { keys: ['self-paced','self paced','course','on-demand','on demand','videos','at my own pace'], reply: "The self-paced course is Dana's full framework in recorded modules — lifetime access, work through it on your own schedule, with monthly live Q&A calls included. It's the most affordable entry point. Want the syllabus, or shall I book you a discovery call?" },
+          { keys: ['price','pricing','cost','how much','invest','investment','afford','payment'], reply: "Programs start at $299/month for the group track, with 1:1 coaching quoted on the discovery call based on your goals. Payment plans are available. Want to grab a call time?" },
+          { keys: ['result','results','work for me','testimonial','proof','success','guarantee','worth it'], reply: "Fair question! Most clients see measurable progress within the first month — and Dana shares real client results on the call so you can judge for yourself. Shall I book you in?" },
+          { keys: ['1:1','one on one','one-on-one','private','individual'], reply: "1:1 spots are limited to keep quality high — there's currently a short waitlist, but the discovery call gets you priority. Want me to schedule one?" },
+          { keys: ['group','momentum','cohort','community'], reply: "The Momentum group program runs in 8-week cohorts with weekly live sessions and a private community — most people's favorite balance of support and price. Want the next cohort's start date?" },
+          { keys: ['online','zoom','remote','timezone','time zone','where are you','in person'], reply: "Everything is fully online over Zoom, with session times across time zones — clients join from four continents. Want to find a time that fits yours?" },
+          { keys: ['yoga','fitness','workout','gym','exercise','nutrition','diet','wellness','meditation'], reply: "Dana's coaching is focused on business and mindset rather than fitness classes — no yoga on the schedule! That said, energy and habits do come up inside the programs. Want to see if it's a fit on a free discovery call?" },
+          { keys: ['cancel','cancellation','commitment','lock-in','lock in'], reply: "There's no long-term lock-in on the group program, and the refund policy is walked through clearly before you join anything. Want to cover it on a discovery call?" },
+          { keys: ['refund','money back','refund request','charged twice'], reply: "Of course — I've submitted your refund request as ticket #AC-1094 and directed it to Dana's billing team. \u2705 You'll get an email confirmation shortly, with a reply within 1 business day. Anything else I can help with?" }
+        ]
+      },
+      {
+        id: 'ecom', label: 'E-commerce Store', brand: 'Northwind Goods', assistant: 'Ruby', mono: 'NG',
+        noun: 'order', phone: null, noBooking: true, trackOrders: true,
+        openMin: 540, closeMin: 1080, hoursShort: '9am\u20136pm', daysShort: 'Monday to Saturday', closedDays: ['sunday'],
+        footer: 'a sample online apparel store',
+        placeholder: 'Ask about orders, returns, sizing\u2026',
+        greeting: "Hi! \ud83d\udc4b I'm Ruby, Northwind Goods' AI concierge. I can track your order, help with returns and exchanges, or answer sizing and shipping questions. What can I do for you?",
+        chips: ['Where is my order?', 'Start a return', 'Sizing help', 'Shipping info'],
+        hiReply: "Hi there! \ud83d\udc4b How can I help — tracking an order, a return or exchange, or a sizing question?",
+        yesReply: "Great! What can I help with — tracking an order, a return or exchange, sizing, or shipping?",
+        phoneReply: "The fastest way is right here in chat, or by email at support@northwindgoods.com — the team replies within a few hours on business days. What can I help with in the meantime?",
+        hoursReply: "Our support team is around Monday to Saturday, 9am\u20136pm — but I'm here 24/7, and the store never closes. \ud83d\uded2 What can I help with?",
+        urgent: null,
+        intents: [
+          { keys: ['where is my order','wheres my order','track','tracking','order status','hasnt arrived',"hasn't arrived",'not arrived','shipped yet','my package','my parcel','delivery status'], reply: "Happy to check! What's your order number? You'll find it in your confirmation email — it looks like #48213." },
+          { keys: ['return','send back','send it back','money back','doesnt fit',"doesn't fit",'too small','too big','wrong size'], reply: "No problem — returns are free within 30 days. I've opened return ticket #RT-2841 and directed it to our Returns team; a prepaid shipping label is on its way to your email. \u2705 Would you prefer an exchange instead?" },
+          { keys: ['refund','refund request','charged twice','never refunded'], reply: "Done — I've submitted your refund request as ticket #NG-7305 and directed it to our Billing team. \u2705 You'll get an email confirmation now, and the refund lands back on your original payment method within 3\u20135 business days. Anything else?" },
+          { keys: ['exchange','different size','swap','different color','different colour'], reply: "Easy — exchanges are free, and we hold the new item for you while your return is in transit. Which item and what size or color would you like instead?" },
+          { keys: ['size','sizing','fit','measurements','size chart','runs small','runs large','what size'], reply: "Our fits run true to size, and every product page has a detailed size chart with garment measurements. If you're between sizes, most customers size up. Want a recommendation for a specific item?" },
+          { keys: ['shipping','ship','delivery','how long','when will it arrive','express','overnight','international'], reply: "Standard shipping is free over $75 and takes 3\u20135 business days; express is 1\u20132 days. We ship internationally to most countries. Want me to check a specific destination?" },
+          { keys: ['in stock','restock','back in stock','sold out','available','availability'], reply: "If an item shows sold out, you can tap \u201cNotify me\u201d on the product page — restocks usually land within 2\u20133 weeks. Want me to note your interest for a specific item?" },
+          { keys: ['discount','promo','coupon','code','sale','deal'], reply: "First order? Code WELCOME10 takes 10% off. \ud83c\udf89 Our seasonal sale section is always live on the site too. Anything else I can help with?" },
+          { keys: ['payment','pay','klarna','afterpay','paypal','apple pay','installments','instalments'], reply: "We accept all major cards, PayPal, Apple Pay, and Klarna for pay-in-4 installments. Everything is processed securely at checkout. Anything else?" },
+          { keys: ['damaged','broken','defect','wrong item','missing item','missing from my order'], reply: "I'm so sorry about that! I've opened priority ticket #NG-1187 and directed it to our Support team with a replacement request — no need to send the damaged item back. \u2705 You'll get a confirmation email shortly." },
+          { keys: ['cancel my order','change my order','wrong address','change the address','edit my order'], reply: "If your order hasn't shipped yet, we can still catch it — I've flagged it for the Fulfillment team as ticket #NG-3320. \u2705 What needs changing: the address, the items, or a full cancellation?" }
+        ]
+      },
+      {
+        id: 'saas', label: 'B2B SaaS', brand: 'Loopdesk', assistant: 'Nova', mono: 'LD',
+        noun: 'demo', phone: null,
+        openMin: 540, closeMin: 1080, hoursShort: '9am\u20136pm', daysShort: 'Monday to Friday', closedDays: ['saturday','sunday'],
+        footer: 'a sample B2B SaaS company',
+        placeholder: 'Ask about demos, pricing, integrations\u2026',
+        greeting: "Hi! \ud83d\udc4b I'm Nova, Loopdesk's AI concierge. Loopdesk helps B2B teams run client scheduling from one shared workspace. I can book you a live demo, walk through pricing, or answer product questions. What brings you here today?",
+        chips: ['Book a demo', 'How does pricing work?', 'What integrations?', 'Request a refund'],
+        hiReply: "Hi there! \ud83d\udc4b How can I help — a live demo, pricing, or a product question?",
+        phoneReply: "The quickest way is right here in chat, or sales@loopdesk.io for the sales team. Want me to book you a live demo instead?",
+        urgent: null,
+        intents: [
+          { keys: ['demo','book','walkthrough','walk-through','see it in action','sales call','talk to sales','schedule'], reply: "Great choice — the live demo is 25 minutes, tailored to your team's workflow. What day works for you? We run demos Monday to Friday, 9am\u20136pm." },
+          { keys: ['pricing','price','cost','how much','plans','plan','per seat','per user','tier'], reply: "Loopdesk is $12 per seat/month on the Team plan, with volume pricing from 25 seats and 20% off annual billing. Enterprise is quoted on a call. Want me to book a demo so we can scope your team?" },
+          { keys: ['trial','free trial','try it','test it','free version','freemium'], reply: "Yes — every plan starts with a 14-day free trial, full features, no credit card required. Want the signup link, or a demo first so your team hits the ground running?" },
+          { keys: ['integrat','slack','salesforce','hubspot','zapier','google calendar','outlook','calendar sync','crm'], reply: "Loopdesk connects natively with Slack, Google & Outlook calendars, Salesforce, HubSpot, and 2,000+ apps via Zapier — plus a full REST API. Which tools does your team run on?" },
+          { keys: ['security','soc 2','soc2','sso','saml','gdpr','compliance','data','encrypt','privacy'], reply: "Security is table stakes for us: SOC 2 Type II certified, SSO/SAML on Business plans, GDPR compliant, and all data encrypted in transit and at rest. Want our security whitepaper sent over?" },
+          { keys: ['onboard','onboarding','migrate','migration','switch from','import','setup','set up'], reply: "Most teams are fully onboarded in under a week — we migrate your existing schedules and run a team training session, free on annual plans. Want to see the process on a demo?" },
+          { keys: ['team','teams','seats','users','how many people','collaborat'], reply: "Loopdesk is built for teams of 5 to 500 — shared workspaces, role-based permissions, and team-level analytics. How big is your team? I can point you at the right plan." },
+          { keys: ['api','developer','webhook','custom integration'], reply: "There's a full REST API with webhooks on every paid plan — docs are public at loopdesk.io/developers. Want me to connect you with a solutions engineer?" },
+          { keys: ['cancel','cancellation','contract','lock-in','lock in','commitment'], reply: "No lock-in — monthly plans cancel anytime from your billing settings, and annual plans can be set not to renew. Anything else holding you back? Happy to get your questions answered on a demo." },
+          { keys: ['refund','money back','refund request','charged twice','overcharged','billing issue'], reply: "Done — I've submitted your refund request as ticket #BL-3172 and directed it to the Loopdesk Billing team. \u2705 You'll get an email confirmation now and a resolution within 2 business days. Anything else I can help with?" },
+          { keys: ['support','sla','help desk','response time','account manager'], reply: "Team plans get priority chat & email support; Business and Enterprise add a dedicated account manager and a 99.9% uptime SLA. Want the full support comparison?" },
+          { keys: ['enterprise','procurement','invoice','custom contract','msa'], reply: "Enterprise plans include custom contracts, invoicing, SSO, and dedicated onboarding. I can set up a call with our enterprise team — what day works for you?" }
+        ]
+      }
+    ];
+    // Shared plumbing per pack: canned strings + common intents appended after specialties.
+    packs.forEach(p => {
+      p.HANDOFF = "Perfect — I'm connecting you with a member of the " + p.brand + " team now. If you'd like, leave your name and best contact number and someone will follow up shortly. \ud83d\udcac (On your live site, this handoff reaches real staff instantly across chat, Instagram, WhatsApp or SMS.)";
+      p.UNMATCHED = "That's a little outside what I can help with as the demo assistant, so I don't want to guess. Would you like me to connect you with a real person from the " + p.brand + " team?";
+      p.LIMIT = "\ud83d\udd12 That's as far as the demo goes — thanks for trying the " + p.brand + " AI Concierge! On a live site I'd keep helping 24/7 with no limits, across chat, Instagram, WhatsApp and SMS. Like what you see? Tap \u201cBack to services\u201d to explore the plans.";
+      const common = [
+        { keys: ['human','real person','speak to someone','talk to someone','agent','representative','real human','talk to a person'], reply: p.HANDOFF },
+        { keys: ['complaint','complain','unhappy','disappointed','dissatisfied','terrible service','bad experience','awful','speak to a manager','talk to the manager','manager','poor job','bad job'], reply: "I'm really sorry about that — your experience matters, and this deserves a real person's attention. I've escalated it to the " + p.brand + " management team as a priority \u2705 and someone will reach out to you shortly. (On your live site, this alert reaches staff instantly across chat, email or SMS.) Is there anything you'd like me to pass along?" },
+        { keys: ["didn't give",'didnt give','how did you book','not real',"isn't real",'isnt real','actually book',"don't have my",'dont have my','no real','without my','made that up'], reply: "Sharp catch — this is the demo, so nothing was actually booked. On your live site I'd collect your name and contact details first, then write the booking straight into your real calendar or CRM. Try me on anything else!" },
+        { keys: ['hour','open','opening','close','closing','what time','when are you'], reply: p.hoursReply || ("We're open " + p.daysShort + ", " + p.hoursShort + ". Would you like me to find you a time?") },
+        { keys: ['phone','number','contact','email','reach you'], reply: p.phoneReply || ("You can reach the team at " + p.phone + ", or just keep chatting here. Would you like me to book your " + p.noun + "?") },
+        { keys: ['hi','hello','hey','good morning','good afternoon','good evening','howdy'], reply: p.hiReply },
+        { keys: ['thank','thanks','cheers','appreciate'], reply: "You're very welcome! Is there anything else I can help you with?" },
+        { keys: ['bye','goodbye','see you','that\u2019s all','thats all','nothing else','no thanks'], reply: "Thanks for chatting with " + p.brand + " — take care! \ud83d\ude0a" }
+      ];
+      const urgentFirst = p.urgent ? [{ keys: p.urgent.keys, reply: p.urgent.reply }] : [];
+      p.allIntents = [common[0], ...urgentFirst, ...p.intents, ...common.slice(1)];
+    });
+    return packs;
+  }
+
+  _pick(i) {
+    if (i === this.state.ind) return;
+    this._session++;
+    this._pendingDay = null;
+    this._lastIntent = null;
+    this._smallTalk = 0;
+    const p = this.PACKS[i];
+    this.setState({ ind: i, messages: [{ role: 'bot', text: p.greeting }], pending: false, awaitingHandoff: false, locked: false });
+    try {
+      const u = new URL(location.href);
+      u.searchParams.set('industry', p.id);
+      history.replaceState(null, '', u);
+    } catch (e) {}
+    const inp = document.getElementById('cc-chat-input');
+    if (inp) {
+      inp.disabled = false; inp.style.opacity = '1'; inp.value = '';
+      const sb = inp.parentElement.querySelector('button');
+      if (sb) { sb.style.opacity = '1'; sb.style.pointerEvents = 'auto'; }
+    }
+  }
+
+  _hit(t, key) {
+    if (key.indexOf(' ') >= 0) return t.indexOf(key) >= 0;
+    return new RegExp('\\b' + key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(t);
+  }
+
+  _isUrgent(t) {
+    const u = this.P.urgent;
+    return !!(u && u.keys.some(k => t.indexOf(k) >= 0));
+  }
+
+  // Detect a day/date/time (and optional name) so the demo can act like it's booking
+  _parseBooking(text) {
+    const t = text.toLowerCase();
+    let minutes = null, timeText = null;
+    let m = text.match(/(\d{1,2})(?::(\d{2}))?\s*(a\.?m\.?|p\.?m\.?)/i);
+    if (m) {
+      let h = parseInt(m[1], 10); const min = m[2] ? parseInt(m[2], 10) : 0;
+      const pm = /p/i.test(m[3]);
+      if (h === 12) h = pm ? 12 : 0; else if (pm) h += 12;
+      minutes = h * 60 + min;
+      timeText = m[0].replace(/\s+/g, '').replace(/\./g, '').toLowerCase();
+    } else {
+      m = t.match(/\b(\d{1,2}):(\d{2})\b/);
+      if (m) { const h = parseInt(m[1], 10), min = parseInt(m[2], 10); if (h <= 23 && min <= 59) { minutes = h * 60 + min; timeText = m[0]; } }
+    }
+    const days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+    let day = null, dayText = null;
+    for (const d of days) { if (t.indexOf(d) >= 0) { day = d; dayText = d.charAt(0).toUpperCase() + d.slice(1); break; } }
+    if (!day) { if (/\btomorrow\b/.test(t)) { day = 'tomorrow'; dayText = 'tomorrow'; } else if (/\btoday\b/.test(t)) { day = 'today'; dayText = 'today'; } }
+    let dateText = null;
+    const mo = text.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec)\.?\s+(\d{1,2})\b/i);
+    if (mo) dateText = mo[0].replace(/\s+/g, ' ');
+    let name = null;
+    const nm = text.match(/\b(?:my name is|name is|name'?s|the name is|under)\s+([a-z][a-z.'\-]+(?:\s+[a-z][a-z.'\-]+){0,2})/i) || text.match(/^\s*name\s+([a-z][a-z.'\-]+(?:\s+[a-z][a-z.'\-]+){0,2})/i);
+    if (nm) name = nm[1].replace(/\b\w/g, c => c.toUpperCase()).trim();
+    if (minutes == null && !day && !dateText) return null;
+    return { minutes, timeText, day, dayText, dateText, name };
+  }
+
+  // Repeated "no" winds the chat down instead of looping the same line forever
+  _noReply(p) {
+    this._noCount = (this._noCount || 0) + 1;
+    if (this._noCount >= 2) {
+      this._noCount = 0;
+      return "All good! Thanks for stopping by " + p.brand + " — I'll be right here whenever you need me. Take care! \ud83d\udc4b";
+    }
+    return "No problem! Is there anything else I can help you with?";
+  }
+
+  _respond(text) {
+    const p = this.P;
+    const t = text.toLowerCase().trim();
+    const isNo = /^(no|nope|nah|not now|no thanks|no thank you|maybe later|never ?mind|i'?m (good|fine|ok|okay)|nothing)[.!\s]*$/.test(t);
+    if (!isNo) this._noCount = 0;
+    if (this.state.awaitingHandoff) {
+      if (/\b(yes|yeah|yep|sure|ok|okay|please|connect|human|person|agent|someone)\b/.test(t))
+        return { text: p.HANDOFF, awaitingHandoff: false };
+      if (/\b(no|nope|nah|never ?mind)\b/.test(t))
+        return { text: this._noReply(p), awaitingHandoff: false };
+      // otherwise fall through and try to answer the new question
+    }
+    // Bare yes/no answers progress the conversation instead of dead-ending
+    if (/^(yes|yeah|yep|yup|sure|ok|okay|sounds good|please|absolutely|go ahead|let'?s do it|why not)[.!\s]*$/.test(t))
+      return { text: p.yesReply || ("Great — what day and time work best for you? We're open " + p.daysShort + ", " + p.hoursShort + ", and I'll get you booked in."), awaitingHandoff: false };
+    if (isNo)
+      return { text: this._noReply(p), awaitingHandoff: false };
+    // Urgent matters take priority over any booking parse
+    if (this._isUrgent(t)) return { text: p.urgent.reply, awaitingHandoff: false };
+    // E-commerce: a bare order number gets a fake tracking lookup
+    if (p.trackOrders) {
+      const om = t.match(/#?(\d{4,})\b/);
+      if (om) return { text: "Found it! \ud83d\udce6 Order #" + om[1] + " left our warehouse yesterday and is out for delivery — expected by tomorrow evening. (On your live store I'd pull this straight from Shopify or WooCommerce in real time.) Anything else I can check?", awaitingHandoff: false };
+    }
+    // Booking: a day and/or time in the message → act like we're booking one
+    const b = p.noBooking ? null : this._parseBooking(text);
+    if (b) {
+      // Merge a bare time with the day remembered from the previous turn
+      if (b.minutes != null && !b.day && !b.dateText && this._pendingDay) {
+        b.day = this._pendingDay.day; b.dayText = this._pendingDay.dayText;
+      }
+      if (b.day && p.closedDays.indexOf(b.day) >= 0) {
+        const cap = b.day.charAt(0).toUpperCase() + b.day.slice(1);
+        return { text: "We're closed on " + cap + "s — could you pick another day? We're open " + p.daysShort + ", " + p.hoursShort + ".", awaitingHandoff: false };
+      }
+      if (b.minutes != null && (b.minutes < p.openMin || b.minutes > p.closeMin))
+        return { text: "We're open " + p.hoursShort + ", so " + b.timeText + " is outside our hours. Could you choose a time between " + p.hoursShort.replace('\u2013', ' and ') + "?", awaitingHandoff: false };
+      if (b.minutes == null) {
+        const when = b.dateText || b.dayText;
+        this._pendingDay = { day: b.day, dayText: b.dayText || b.dateText };
+        return { text: "Great — " + when + " works! What time would you like? We're open " + p.hoursShort + ".", awaitingHandoff: false };
+      }
+      let whenBits = '';
+      if (b.dayText && b.dateText) whenBits = b.dayText + ', ' + b.dateText;
+      else if (b.dateText) whenBits = b.dateText;
+      else if (b.dayText) whenBits = b.dayText;
+      const whenPhrase = whenBits ? whenBits + ' at ' + b.timeText : b.timeText;
+      const namePart = b.name ? ' Thanks, ' + b.name + '!' : '';
+      this._pendingDay = null;
+      this._lastIntent = null;
+      return { text: "You're all set! \u2705 I've booked your " + p.noun + " for " + whenPhrase + ". You'll get a confirmation by text shortly." + namePart, awaitingHandoff: false };
+    }
+    let best = null, bestScore = 0, bestKeyLen = 0;
+    for (const it of p.allIntents) {
+      let s = 0, kl = 0;
+      for (const k of it.keys) { if (this._hit(t, k)) { s++; kl = Math.max(kl, k.length); } }
+      // Ties go to the more specific (longer) matched keyword — "momentum" beats "program"
+      if (s > bestScore || (s > 0 && s === bestScore && kl > bestKeyLen)) { bestScore = s; bestKeyLen = kl; best = it; }
+    }
+    if (best && bestScore > 0) {
+      this._smallTalk = 0;
+      // Same intent twice in a row: if they gave details (not a question), acknowledge — don't parrot.
+      // A rephrased QUESTION should just get the answer again, never a fake "noted!".
+      const isQuestion = /\?\s*$/.test(t) || /^(what|whats|how|why|when|where|who|which|explain|tell me|can you|could you|do you|does|is there|are there)\b/.test(t);
+      if (best === this._lastIntent && !isQuestion) {
+        this._lastIntent = null;
+        return { text: "Perfect — noted! \u2705 I've passed those details to the " + p.brand + " team. Want me to lock in your " + p.noun + "? Just tell me a day and time.", awaitingHandoff: false };
+      }
+      this._lastIntent = best;
+      return { text: best.reply, awaitingHandoff: false };
+    }
+    this._lastIntent = null;
+    // Small talk: nothing business-shaped matched, so reply like a person before steering back.
+    // Persistent off-topic (3rd in a row) falls back to the scripted boundary.
+    const wellbeing = /(how are (you|u)|how'?re you|how r u|how (are )?you doing|how'?s it going|how'?s your (day|morning|afternoon|evening)|how is your day|how'?s everything|how'?ve you been|how have you been|hope (you'?re|you are|your day)|having a good day|nice to meet you)/.test(t);
+    const weather = /(weather|raining|rainy|sunny|snowing|cloudy|humid|hot (out|today)|cold (out|today))/.test(t);
+    const playful = /(tell me a joke|know any jokes|make me laugh|sing|favorite (color|colour|food|movie|song)|favourite (colour|food|movie|song)|meaning of life|are you real|are you a robot|are you human)/.test(t);
+    const casual = /(what'?s up|whats up|what up\b|wass?up|whaddup|whazz?up|\bsup\b|^yo[.!\s]*$)/.test(t);
+    if (wellbeing || weather || playful || casual) {
+      this._smallTalk = (this._smallTalk || 0) + 1;
+      if (this._smallTalk >= 3) return { text: p.UNMATCHED, awaitingHandoff: true };
+      const bookTail = p.noBooking ? "anything I can help you with?" : ("anything I can help with, or shall I get you booked in?");
+      if (this._smallTalk === 2) return { text: "Ha — I could chat all day, but I'm at my best talking about " + p.brand + ". \ud83d\ude0a Any questions I can answer" + (p.noBooking ? "?" : (", or shall I book your " + p.noun + "?")), awaitingHandoff: false };
+      if (weather) return { text: "\u2600\ufe0f It's a perfect 72\u00b0 in the chat window — best climate on the internet. But enough about me: what can I help you with at " + p.brand + "?", awaitingHandoff: false };
+      if (playful) return { text: "My talents are pretty specialized \ud83d\ude04 — think questions and bookings for " + p.brand + ". What can I do for you?", awaitingHandoff: false };
+      if (casual) return { text: "Hey! Not much — just here helping folks at " + p.brand + ". \ud83d\ude0a What's up with you — " + bookTail, awaitingHandoff: false };
+      return { text: "I'm doing great, thanks for asking! \ud83d\ude0a It's always a good day at " + p.brand + ". How about you — " + bookTail, awaitingHandoff: false };
+    }
+    this._smallTalk = 0;
+    return { text: p.UNMATCHED, awaitingHandoff: true };
+  }
+
+  _bubble(role) {
+    const base = 'max-width:82%;padding:10px 14px;font-size:13.5px;line-height:1.55;border-radius:14px;word-break:break-word;';
+    return role === 'user'
+      ? base + 'background:#00D4A4;color:#0D1117;font-weight:500;border-bottom-right-radius:4px;'
+      : base + 'background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.9);border-bottom-left-radius:4px;';
+  }
+
+  _sendText(text) {
+    const v = (text || '').trim();
+    if (!v || this.state.pending || this.state.locked) return;
+    const msgs = [...this.state.messages, { role: 'user', text: v }];
+    const userCount = msgs.filter(m => m.role === 'user').length;
+    this.setState({ messages: msgs, pending: true });
+    // Trial demo caps at 10 visitor messages per industry, then stops responding
+    const atLimit = userCount >= 10;
+    const reply = atLimit ? { text: this.P.LIMIT, awaitingHandoff: false } : this._respond(v);
+    const delay = 500 + Math.min(900, reply.text.length * 10);
+    const session = this._session;
+    setTimeout(() => {
+      if (session !== this._session) return; // industry switched mid-reply
+      this.setState(s => ({
+        messages: [...s.messages, { role: 'bot', text: reply.text }],
+        pending: false,
+        awaitingHandoff: reply.awaitingHandoff,
+        locked: atLimit || s.locked
+      }));
+    }, delay);
+  }
+
+  send() {
+    const el = document.getElementById('cc-chat-input');
+    if (!el) return;
+    const v = el.value;
+    el.value = '';
+    this._sendText(v);
+  }
+
+  onKey(e) {
+    if (e.key === 'Enter') { e.preventDefault(); this.send(); }
+  }
+
+  componentDidUpdate() {
+    const box = document.getElementById('cc-chat-msgs');
+    if (box) requestAnimationFrame(() => requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; }));
+    if (this.state.locked) {
+      const inp = document.getElementById('cc-chat-input');
+      if (inp) { inp.disabled = true; inp.placeholder = 'Demo limit reached — tap \u201cBack to services\u201d.'; inp.style.opacity = '0.5'; }
+      if (inp && inp.parentElement) {
+        const sb = inp.parentElement.querySelector('button');
+        if (sb) { sb.style.opacity = '0.4'; sb.style.pointerEvents = 'none'; }
+      }
+    }
+  }
+
+  renderVals() {
+    const p = this.P;
+    const railBase = 'display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;cursor:pointer;transition:all .18s ease;width:100%;';
+    const monoBase = 'width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;';
+    return {
+      inds: this.PACKS.map((pk, i) => {
+        const on = i === this.state.ind;
+        return {
+          label: pk.label,
+          brand: pk.brand,
+          mono: pk.mono,
+          pick: () => this._pick(i),
+          style: railBase + (on ? 'background:rgba(0,212,164,0.1);border:1px solid rgba(0,212,164,0.45);' : 'background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);'),
+          monoStyle: monoBase + (on ? 'background:#00D4A4;color:#0D1117;' : 'background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);'),
+          labelStyle: 'font-size:13.5px;font-weight:600;white-space:nowrap;color:' + (on ? '#fff' : 'rgba(255,255,255,0.75)')
+        };
+      }),
+      brand: p.brand,
+      assistantInitial: p.assistant.charAt(0),
+      assistantLine: p.assistant + ' \u00b7 AI concierge — replies instantly',
+      footerNoun: p.footer,
+      placeholder: p.placeholder,
+      msgs: this.state.messages.map(m => ({ text: m.text, row: 'display:flex;' + (m.role === 'user' ? 'justify-content:flex-end' : 'justify-content:flex-start'), bubble: this._bubble(m.role) })),
+      pending: this.state.pending,
+      chips: p.chips.map(c => ({ label: c, go: () => this._sendText(c) })),
+      send: () => this.send(),
+      onKey: (e) => this.onKey(e)
+    };
+  }
+}
+</script>
+</body>
+</html>

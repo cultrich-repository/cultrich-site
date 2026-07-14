@@ -1,0 +1,15 @@
+/* ============================================================
+   Mintlify — Radius Tokens
+   Tightly disciplined: rectangular cards use lg (12px),
+   pills use full. No softening between md and lg per family.
+   ============================================================ */
+
+:root {
+  --radius-xs: 4px;     /* Inline code chips, micro tags */
+  --radius-sm: 6px;     /* Sidebar nav items, type badges */
+  --radius-md: 8px;     /* Inputs, search pill, code blocks */
+  --radius-lg: 12px;    /* Standard cards, pricing tiers, mockup */
+  --radius-xl: 16px;    /* Larger feature panels */
+  --radius-xxl: 24px;   /* Featured product showcase tiles */
+  --radius-full: 9999px;/* All buttons, pill tabs, badges */
+}

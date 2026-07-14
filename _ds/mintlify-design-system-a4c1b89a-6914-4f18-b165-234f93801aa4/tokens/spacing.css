@@ -1,0 +1,26 @@
+/* ============================================================
+   Mintlify — Spacing Tokens
+   Base unit 4px; 8px primary increment.
+   ============================================================ */
+
+:root {
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-xxxl: 40px;
+  --space-section-sm: 48px;
+  --space-section: 64px;
+  --space-section-lg: 96px;
+  --space-hero: 120px;
+
+  /* ---- Container ---- */
+  --container-max: 1280px;
+  --container-gutter: 32px;
+  --docs-sidebar: 240px;
+  --docs-prose: 720px;
+  --docs-toc: 200px;
+}

@@ -1,0 +1,202 @@
+/* ============================================================
+   Mintlify — Typography Tokens
+   Inter for all UI prose; Geist Mono surgically for code.
+   No italics — emphasis via weight, color, or highlight.
+   ============================================================ */
+
+:root {
+  /* ---- Families ---- */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  /* ---- Weights ---- */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* ---- Type scale: size / line-height / letter-spacing ---- */
+  --type-hero-display-size: 72px;
+  --type-hero-display-line: 1.05;
+  --type-hero-display-spacing: -2px;
+
+  --type-display-lg-size: 56px;
+  --type-display-lg-line: 1.10;
+  --type-display-lg-spacing: -1.5px;
+
+  --type-heading-1-size: 48px;
+  --type-heading-1-line: 1.10;
+  --type-heading-1-spacing: -1px;
+
+  --type-heading-2-size: 36px;
+  --type-heading-2-line: 1.20;
+  --type-heading-2-spacing: -0.5px;
+
+  --type-heading-3-size: 28px;
+  --type-heading-3-line: 1.25;
+  --type-heading-3-spacing: 0;
+
+  --type-heading-4-size: 22px;
+  --type-heading-4-line: 1.30;
+  --type-heading-4-spacing: 0;
+
+  --type-heading-5-size: 18px;
+  --type-heading-5-line: 1.40;
+  --type-heading-5-spacing: 0;
+
+  --type-subtitle-size: 18px;
+  --type-subtitle-line: 1.50;
+
+  --type-body-md-size: 16px;
+  --type-body-md-line: 1.50;
+
+  --type-body-sm-size: 14px;
+  --type-body-sm-line: 1.50;
+
+  --type-caption-size: 13px;
+  --type-caption-line: 1.40;
+
+  --type-micro-size: 12px;
+  --type-micro-line: 1.40;
+
+  --type-micro-uppercase-size: 11px;
+  --type-micro-uppercase-line: 1.40;
+  --type-micro-uppercase-spacing: 0.5px;
+
+  --type-button-md-size: 14px;
+  --type-button-md-line: 1.30;
+
+  --type-code-md-size: 14px;
+  --type-code-md-line: 1.50;
+
+  --type-code-sm-size: 13px;
+  --type-code-sm-line: 1.40;
+
+  --type-code-inline-size: 13px;
+  --type-code-inline-line: 1.30;
+}
+
+/* ============================================================
+   Type utility classes — apply a full token in one class.
+   ============================================================ */
+
+.ty-hero-display {
+  font-family: var(--font-sans);
+  font-size: var(--type-hero-display-size);
+  line-height: var(--type-hero-display-line);
+  letter-spacing: var(--type-hero-display-spacing);
+  font-weight: var(--weight-semibold);
+}
+.ty-display-lg {
+  font-family: var(--font-sans);
+  font-size: var(--type-display-lg-size);
+  line-height: var(--type-display-lg-line);
+  letter-spacing: var(--type-display-lg-spacing);
+  font-weight: var(--weight-semibold);
+}
+.ty-heading-1 {
+  font-family: var(--font-sans);
+  font-size: var(--type-heading-1-size);
+  line-height: var(--type-heading-1-line);
+  letter-spacing: var(--type-heading-1-spacing);
+  font-weight: var(--weight-semibold);
+}
+.ty-heading-2 {
+  font-family: var(--font-sans);
+  font-size: var(--type-heading-2-size);
+  line-height: var(--type-heading-2-line);
+  letter-spacing: var(--type-heading-2-spacing);
+  font-weight: var(--weight-semibold);
+}
+.ty-heading-3 {
+  font-family: var(--font-sans);
+  font-size: var(--type-heading-3-size);
+  line-height: var(--type-heading-3-line);
+  letter-spacing: var(--type-heading-3-spacing);
+  font-weight: var(--weight-semibold);
+}
+.ty-heading-4 {
+  font-family: var(--font-sans);
+  font-size: var(--type-heading-4-size);
+  line-height: var(--type-heading-4-line);
+  font-weight: var(--weight-semibold);
+}
+.ty-heading-5 {
+  font-family: var(--font-sans);
+  font-size: var(--type-heading-5-size);
+  line-height: var(--type-heading-5-line);
+  font-weight: var(--weight-semibold);
+}
+.ty-subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--type-subtitle-size);
+  line-height: var(--type-subtitle-line);
+  font-weight: var(--weight-regular);
+}
+.ty-body-md {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-md-size);
+  line-height: var(--type-body-md-line);
+  font-weight: var(--weight-regular);
+}
+.ty-body-md-medium {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-md-size);
+  line-height: var(--type-body-md-line);
+  font-weight: var(--weight-medium);
+}
+.ty-body-sm {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+  font-weight: var(--weight-regular);
+}
+.ty-body-sm-medium {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+  font-weight: var(--weight-medium);
+}
+.ty-caption {
+  font-family: var(--font-sans);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--weight-regular);
+}
+.ty-caption-bold {
+  font-family: var(--font-sans);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--weight-semibold);
+}
+.ty-micro {
+  font-family: var(--font-sans);
+  font-size: var(--type-micro-size);
+  line-height: var(--type-micro-line);
+  font-weight: var(--weight-medium);
+}
+.ty-micro-uppercase {
+  font-family: var(--font-sans);
+  font-size: var(--type-micro-uppercase-size);
+  line-height: var(--type-micro-uppercase-line);
+  letter-spacing: var(--type-micro-uppercase-spacing);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+}
+.ty-code-md {
+  font-family: var(--font-mono);
+  font-size: var(--type-code-md-size);
+  line-height: var(--type-code-md-line);
+  font-weight: var(--weight-regular);
+}
+.ty-code-sm {
+  font-family: var(--font-mono);
+  font-size: var(--type-code-sm-size);
+  line-height: var(--type-code-sm-line);
+  font-weight: var(--weight-regular);
+}
+.ty-code-inline {
+  font-family: var(--font-mono);
+  font-size: var(--type-code-inline-size);
+  line-height: var(--type-code-inline-line);
+  font-weight: var(--weight-medium);
+}

@@ -1,0 +1,26 @@
+/* ============================================================
+   Mintlify — Elevation Tokens
+   Predominantly flat with strategic atmospheric depth.
+   ============================================================ */
+
+:root {
+  /* Level 0 (flat): no shadow — uses hairline border instead */
+  --shadow-0: none;
+
+  /* Level 1 (subtle): hover-elevated tiles */
+  --shadow-1: rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
+
+  /* Level 2 (card): standard feature cards */
+  --shadow-2: rgba(0, 0, 0, 0.08) 0px 4px 12px 0px;
+
+  /* Level 3 (mockup): deep diffuse drop on the hero product mockup */
+  --shadow-3: rgba(0, 0, 0, 0.12) 0px 24px 48px -8px;
+
+  /* Level 4 (brand-tinted): featured pricing tier glow */
+  --shadow-4: rgba(0, 212, 164, 0.08) 0px 8px 24px;
+
+  /* Motion — recommended 150–200ms ease for state transitions */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --duration-fast: 150ms; /* @kind other */
+  --duration-base: 200ms; /* @kind other */
+}

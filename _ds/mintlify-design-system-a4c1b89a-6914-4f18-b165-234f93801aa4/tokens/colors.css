@@ -1,0 +1,70 @@
+/* ============================================================
+   Mintlify — Color Tokens
+   Brand mint reserved for accent CTAs + active states only.
+   Black-pill primary dominates light surfaces.
+   ============================================================ */
+
+:root {
+  /* ---- Brand & Accent ---- */
+  --color-brand-green: #00D4A4;        /* Mintlify Mint — signature accent */
+  --color-brand-green-deep: #00A884;   /* Pressed / active variant */
+  --color-brand-green-soft: #E6FBF6;   /* Subtle success / confirmation tint */
+  --color-brand-tag: #3772CF;          /* Docs tag + JSX reference blue */
+  --color-brand-annotate: #2DA44E;     /* Inline code annotation green */
+  --color-brand-warn: #D9A406;         /* Code warning highlight (amber) */
+  --color-brand-error: #E5484D;        /* Required labels / error red */
+  --color-testimonial-orange: #F2643C; /* Warm coral testimonial surface */
+
+  /* ---- Surface ---- */
+  --color-canvas: #FFFFFF;             /* Primary page + card background */
+  --color-canvas-dark: #0D1117;        /* Promo banner / dark inversion */
+  --color-surface: #F4F5F6;            /* Subtle section bg, search-pill rest */
+  --color-surface-soft: #FAFAFB;       /* Quieter section bg, FAQ accordion */
+  --color-surface-code: #16181D;       /* Dark code-block wrapper */
+  --color-hairline: #E6E8EB;           /* 1px borders + primary dividers */
+  --color-hairline-soft: #F0F1F3;      /* Quieter row dividers */
+  --color-hairline-dark: rgba(255, 255, 255, 0.10); /* Dividers on dark */
+
+  /* ---- Hero Atmospheric ---- */
+  --color-hero-sky-from: #D7EBFB;      /* Homepage hero — sky blue */
+  --color-hero-sky-to: #FBF6EF;        /* Homepage hero — soft cream */
+  --color-hero-dark-from: #06312C;     /* Startups hero — dark teal */
+  --color-hero-dark-to: #0FBF94;       /* Startups hero — mint */
+
+  /* ---- Text ---- */
+  --color-ink: #18181B;                /* Headlines + CTA text */
+  --color-charcoal: #2E3138;           /* Body, inline-code foreground */
+  --color-slate: #51555E;              /* Secondary text + metadata */
+  --color-steel: #71757E;              /* Tertiary, table headers, inactive nav */
+  --color-stone: #9A9DA6;              /* Captions, muted labels */
+  --color-muted: #C4C7CE;              /* De-emphasized / disabled text */
+  --color-on-dark: #FFFFFF;            /* White text on dark surfaces */
+  --color-on-dark-muted: rgba(255, 255, 255, 0.62); /* Reduced white on dark */
+
+  /* ---- Action ---- */
+  --color-primary: #18181B;            /* Black pill primary CTA */
+  --color-on-primary: #FFFFFF;         /* Text on primary */
+
+  /* ---- Semantic aliases ---- */
+  --text-heading: var(--color-ink);
+  --text-body: var(--color-charcoal);
+  --text-secondary: var(--color-slate);
+  --text-tertiary: var(--color-steel);
+  --text-muted: var(--color-stone);
+  --text-disabled: var(--color-muted);
+
+  --surface-page: var(--color-canvas);
+  --surface-card: var(--color-canvas);
+  --surface-subtle: var(--color-surface);
+  --surface-quiet: var(--color-surface-soft);
+
+  --border-default: var(--color-hairline);
+  --border-quiet: var(--color-hairline-soft);
+
+  --accent: var(--color-brand-green);
+  --accent-pressed: var(--color-brand-green-deep);
+
+  --success: var(--color-brand-green);
+  --warning: var(--color-brand-warn);
+  --danger: var(--color-brand-error);
+}
