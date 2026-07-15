@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cultrich Concepts — Media Kit</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  @page { size: letter; margin: 0; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#0D1117;--card:#161B22;--mint:#00D4A4;--line:rgba(255,255,255,0.08)}
+  html,body{background:#05070b;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+  body{display:flex;justify-content:center;padding:28px 16px 60px}
+  .page{width:8.5in;min-height:11in;background:var(--bg);color:#fff;padding:0.58in 0.6in 0.5in;position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.6)}
+  .glow{position:absolute;top:-160px;right:-120px;width:520px;height:520px;background:radial-gradient(circle,rgba(0,212,164,0.12) 0%,transparent 65%);pointer-events:none}
+  .row{display:flex;align-items:center;justify-content:space-between;position:relative}
+  .brand{display:flex;align-items:center;gap:9px}
+  .brand-name{font-size:19px;font-weight:600}
+  .kit-tag{font-size:10.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--mint);border:1px solid rgba(0,212,164,0.3);border-radius:9999px;padding:5px 13px}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--mint);margin-bottom:11px}
+  h1{font-size:31px;font-weight:600;letter-spacing:-1px;line-height:1.1;margin-bottom:12px}
+  .lede{font-size:13.5px;line-height:1.6;color:rgba(255,255,255,0.62);max-width:6.1in}
+  .divider{height:1px;background:var(--line);margin:22px 0}
+  .cols{display:grid;grid-template-columns:1.25fr 1fr;gap:34px}
+  .label{font-size:10.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px}
+  .svc{display:flex;align-items:flex-start;gap:9px;margin-bottom:11px}
+  .svc svg{flex-shrink:0;margin-top:2px}
+  .svc b{font-size:13px;font-weight:600;color:#fff}
+  .svc span{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+  .stat .n{font-size:27px;font-weight:700;letter-spacing:-1px;line-height:1}
+  .stat .n span{color:var(--mint)}
+  .stat .l{font-size:11.5px;color:rgba(255,255,255,0.55);margin-top:5px;line-height:1.35}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:11px;color:rgba(255,255,255,0.7);background:rgba(0,212,164,0.08);border:1px solid rgba(0,212,164,0.2);border-radius:9999px;padding:4px 10px}
+  .pkgs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px}
+  .pkg{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 15px}
+  .pkg.feat{border-color:rgba(0,212,164,0.35)}
+  .pkg .t{font-size:11px;font-weight:600;letter-spacing:0.4px;color:rgba(255,255,255,0.55);text-transform:uppercase}
+  .pkg .p{font-size:23px;font-weight:700;letter-spacing:-0.8px;margin:7px 0 4px}
+  .pkg .d{font-size:11px;color:rgba(255,255,255,0.5);line-height:1.45}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+  .foot .region{font-size:12px;color:rgba(255,255,255,0.55)}
+  .foot .region b{color:#fff;font-weight:600}
+  .foot .contact{font-size:12px;color:var(--mint);font-weight:500;text-align:right;line-height:1.6}
+  .backbtn{position:fixed;top:22px;left:22px;display:inline-flex;align-items:center;gap:8px;background:rgba(22,27,34,0.92);color:#fff;border:1px solid rgba(255,255,255,0.14);border-radius:9999px;padding:11px 18px;font:600 13px Inter,sans-serif;text-decoration:none;cursor:pointer;z-index:10;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s cubic-bezier(.22,1,.36,1),box-shadow .2s ease}
+  .backbtn:hover{background:rgba(0,212,164,0.12);border-color:rgba(0,212,164,0.55);color:#00D4A4;transform:translateY(-1px);box-shadow:0 10px 24px rgba(0,0,0,0.35)}
+  .backbtn:active{transform:translateY(0) scale(0.97)}
+  .backbtn .ar{display:inline-block;font-size:15px;line-height:1;transition:transform .2s cubic-bezier(.22,1,.36,1)}
+  .backbtn:hover .ar{transform:translateX(-4px)}
+  .printbtn{position:fixed;bottom:22px;right:22px;background:var(--mint);color:#05070b;border:none;border-radius:9999px;padding:13px 22px;font:600 13px Inter,sans-serif;cursor:pointer;box-shadow:0 12px 30px rgba(0,212,164,0.35);z-index:10}
+  @media(max-width:760px){
+    body{padding:14px 10px 44px}
+    .page{width:100%;min-height:auto;padding:32px 22px}
+    h1{font-size:25px}
+    .lede{font-size:12.5px;max-width:100%}
+    .cols{grid-template-columns:1fr;gap:22px}
+    .pkgs{grid-template-columns:repeat(2,1fr)}
+    .foot{gap:12px}
+    .foot .contact{text-align:left}
+    .kit-tag{font-size:9.5px;padding:4px 9px}
+  }
+  @media print{.printbtn,.backbtn{display:none}body{padding:0;background:#fff}.page{box-shadow:none;width:auto;min-height:auto}html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="glow"></div>
+    <div class="row">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 40 40" fill="none"><path d="M28.5 13 A11 11 0 1 0 28.5 27" stroke="#00D4A4" stroke-width="4" stroke-linecap="round"></path><circle cx="20" cy="20" r="3.1" fill="#00D4A4"></circle></svg>
+        <span class="brand-name">Cultrich<span style="color:#00D4A4">.</span></span>
+      </div>
+      <span class="kit-tag">Media Kit · 2026</span>
+    </div>
+
+    <div style="margin-top:34px" class="rel">
+      <div class="eyebrow">Web Design Agency for SMBs</div>
+      <h1>Websites that win clients,<br>not just compliments.</h1>
+      <p class="lede">Cultrich Concepts designs high-converting websites for service businesses — built to rank, convert, and grow. We pair sharp design with SEO, AI concierge chat, and booking systems, so your site works like your best salesperson.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="cols">
+      <div>
+        <div class="label">What we do</div>
+        <div class="svc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><div><b>Custom Website Design</b> <span>— WordPress, React &amp; HTML/CSS builds tailored to your industry.</span></div></div>
+        <div class="svc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><div><b>SEO &amp; Analytics</b> <span>— on-page SEO, Google Analytics &amp; Business Profile setup.</span></div></div>
+        <div class="svc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><div><b>Logo &amp; Brand Identity</b> <span>— logo, palette, type &amp; guidelines that build trust.</span></div></div>
+        <div class="svc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><div><b>AI Concierge</b> <span>— 24/7 chat that answers, qualifies &amp; books automatically.</span></div></div>
+        <div class="svc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><div><b>Booking &amp; Inquiry Systems</b> <span>— turn visitors into confirmed appointments.</span></div></div>
+        <div class="svc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><div><b>Monthly Care Plans</b> <span>— hosting, SEO monitoring &amp; ongoing updates.</span></div></div>
+      </div>
+      <div>
+        <div class="label">By the numbers</div>
+        <div class="stats">
+          <div class="stat"><div class="n">4<span>–6</span></div><div class="l">Weeks to launch</div></div>
+          <div class="stat"><div class="n">24<span>h</span></div><div class="l">To first action</div></div>
+          <div class="stat"><div class="n">5</div><div class="l">Countries served</div></div>
+          <div class="stat"><div class="n">8</div><div class="l">Industries served</div></div>
+        </div>
+        <div class="label">Industries</div>
+        <div class="chips">
+          <span class="chip">Law Firms</span><span class="chip">Dental &amp; Medical</span><span class="chip">Real Estate</span><span class="chip">SaaS</span><span class="chip">Financial Advisors</span><span class="chip">E-commerce</span><span class="chip">Home Services</span><span class="chip">Online Coaches</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="label">Packages — clear, fixed pricing</div>
+    <div class="pkgs">
+      <div class="pkg feat"><div class="t">Launch</div><div class="p">$1,000</div><div class="d">4-page site for new businesses &amp; solo practices.</div></div>
+      <div class="pkg"><div class="t">Business</div><div class="p">$3,500</div><div class="d">5–10 pages with SEO &amp; integrations.</div></div>
+      <div class="pkg"><div class="t">E-commerce</div><div class="p">$4,500</div><div class="d">Full online store, built to sell.</div></div>
+      <div class="pkg"><div class="t">Unlimited / Enterprise</div><div class="p" style="font-size:18px;letter-spacing:-0.3px">Contact us</div><div class="d">Mission-critical, senior-led builds.</div></div>
+    </div>
+
+    <div class="foot">
+      <div class="region"><b>HQ · Manila, Philippines</b> &nbsp;·&nbsp; Serving US · UAE · Australia · Canada · UK</div>
+      <div class="contact">cultrich.com &nbsp;·&nbsp; @cultrich.concepts<br>+63 956 360 6295</div>
+    </div>
+  </div>
+  <a class="backbtn" href="index.html" onclick="var r=document.referrer;if(r){try{if(new URL(r).origin===location.origin){location.href=r;return false;}}catch(e){}}location.href='index.html';return false;"><span class="ar">←</span> Back to site</a>
+  <button class="printbtn" onclick="window.print()">Save as PDF →</button>
+</body>
+</html>
