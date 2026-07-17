@@ -512,12 +512,22 @@ h2{font-size:30px!important;letter-spacing:-0.6px!important}
     <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.42);max-width:720px;margin:32px auto 0;line-height:1.7">All website packages start with a 50% deposit, with the balance due on delivery before launch. Typical delivery is 2–4 weeks.</p>
     </div>
     <div id="cc-ret-pane" style="display:none">
+    <div id="cc-bill-toggle" style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:40px">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center">
+        <span id="cc-bill-m-lab" style="font-size:14.5px;font-weight:600;color:#fff;transition:color .2s ease">Monthly</span>
+        <button type="button" id="cc-bill-switch" role="switch" aria-checked="false" aria-label="Toggle annual billing" style="position:relative;width:56px;height:30px;border-radius:9999px;border:1px solid rgba(255,255,255,0.18);background:#161B22;cursor:pointer;padding:0;transition:background .2s ease,border-color .2s ease;flex-shrink:0"><span data-knob style="position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:9999px;background:#fff;transition:transform .22s cubic-bezier(.4,0,.2,1),background .2s ease;box-shadow:0 1px 3px rgba(0,0,0,0.4)"></span></button>
+        <span id="cc-bill-a-lab" style="font-size:14.5px;font-weight:600;color:rgba(255,255,255,0.45);transition:color .2s ease">Annual</span>
+        <span style="font-size:11.5px;font-weight:700;letter-spacing:0.4px;color:#00D4A4;background:rgba(0,212,164,0.12);border:1px solid rgba(0,212,164,0.3);padding:4px 10px;border-radius:9999px;white-space:nowrap">SAVE UP TO 23%</span>
+      </div>
+      <p style="font-size:12.5px;color:rgba(255,255,255,0.4);margin:0;text-align:center">Prepay yearly &mdash; Care drops to $99/mo, Growth saves 2 months. Partner stays full-price: annual adds a month-one content engine setup + quarterly strategy sessions, on us.</p>
+    </div>
     <div class="three-col">
       <!-- Care -->
       <div class="cc-card cc-tier" style="background:#161B22;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:34px;display:flex;flex-direction:column;gap:20px">
         <div>
           <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:8px;letter-spacing:0.3px">CARE</div>
-          <div style="display:flex;align-items:baseline;gap:4px"><span style="font-size:40px;font-weight:700;color:#fff;letter-spacing:-1px">$99</span><span style="font-size:15px;color:rgba(255,255,255,0.4)">/mo</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><div style="display:flex;align-items:baseline;gap:4px"><span data-ret-amt data-m="129" data-am="99" style="font-size:40px;font-weight:700;color:#fff;letter-spacing:-1px">$129</span><span style="font-size:15px;color:rgba(255,255,255,0.4)">/mo</span></div><span data-ret-was style="display:none;font-size:13.5px;color:rgba(255,255,255,0.35);text-decoration:line-through">$129/mo</span></div>
+          <div data-ret-sub style="display:none;font-size:12.5px;color:rgba(255,255,255,0.6);margin-top:8px;line-height:1.5"></div>
           <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px">Best for: Keeping a site healthy &amp; secure</div>
         </div>
         <div style="height:1px;background:rgba(255,255,255,0.07)"></div>
@@ -527,25 +537,30 @@ h2{font-size:30px!important;letter-spacing:-0.6px!important}
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Weekly backups (30-day retention)</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Uptime monitoring &amp; incident response</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">SSL certificate management</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Google Business Profile upkeep</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Quarterly SEO health check</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Monthly traffic &amp; leads snapshot</span></div>
         </div>
         <a href="../contact/?service=custom_enterprise" class="cc-cta-soft" style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.07);color:#fff;padding:14px;border-radius:9999px;font-size:14px;font-weight:600;border:1px solid rgba(255,255,255,0.12);margin-top:auto">Choose Care</a>
       </div>
+
       <!-- Growth (Featured) -->
       <div class="cc-card cc-tier" style="background:#161B22;border:1px solid rgba(0,212,164,0.35);border-radius:16px;padding:34px;display:flex;flex-direction:column;gap:20px;position:relative;box-shadow:0 0 40px rgba(0,212,164,0.06)">
-        <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#00D4A4;color:#0D1117;font-size:11px;font-weight:700;letter-spacing:0.6px;padding:4px 14px;border-radius:9999px;white-space:nowrap">MOST POPULAR</div>
+        <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#00D4A4;color:#0D1117;font-size:11px;font-weight:700;letter-spacing:0.6px;padding:4px 14px;border-radius:9999px;white-space:nowrap">BEST DEAL</div>
         <div>
           <div style="font-size:13px;font-weight:600;color:#00D4A4;margin-bottom:8px;letter-spacing:0.3px">GROWTH</div>
-          <div style="display:flex;align-items:baseline;gap:4px"><span style="font-size:40px;font-weight:700;color:#fff;letter-spacing:-1px">$445</span><span style="font-size:15px;color:rgba(255,255,255,0.4)">/mo</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><div style="display:flex;align-items:baseline;gap:4px"><span data-ret-amt data-m="445" data-mfree="2" style="font-size:40px;font-weight:700;color:#fff;letter-spacing:-1px">$445</span><span style="font-size:15px;color:rgba(255,255,255,0.4)">/mo</span></div><span data-ret-was style="display:none;font-size:13.5px;color:rgba(255,255,255,0.35);text-decoration:line-through">$445/mo</span></div>
+          <div data-ret-sub style="display:none;font-size:12.5px;color:rgba(255,255,255,0.6);margin-top:8px;line-height:1.5"></div>
           <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px">Best for: Businesses actively growing traffic</div>
         </div>
         <div style="height:1px;background:rgba(0,212,164,0.15)"></div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Everything in Care, plus:</span></div>
-          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Monthly SEO performance report</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Monthly progress report + quarterly results review — SEO compounds; we show you both the work and the wins</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">2 SEO articles/mo, published to your site — so new customers find you on Google &amp; AI</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Search Console &amp; Analytics monitoring</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Keyword tracking — up to 20 keywords</span></div>
-          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Local SEO &amp; Google Business Profile management</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Local SEO &mdash; GBP optimization, posts &amp; ranking work</span></div>
         </div>
         <a href="../contact/" class="cc-cta" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#00D4A4;color:#0D1117;padding:14px;border-radius:9999px;font-size:14px;font-weight:600;margin-top:auto">Choose Growth <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
       </div>
@@ -553,14 +568,19 @@ h2{font-size:30px!important;letter-spacing:-0.6px!important}
       <div class="cc-card cc-tier" style="background:#161B22;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:34px;display:flex;flex-direction:column;gap:20px">
         <div>
           <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:8px;letter-spacing:0.3px">PARTNER</div>
-          <div style="display:flex;align-items:baseline;gap:4px"><span style="font-size:40px;font-weight:700;color:#fff;letter-spacing:-1px">$997</span><span style="font-size:15px;color:rgba(255,255,255,0.4)">/mo</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><div style="display:flex;align-items:baseline;gap:4px"><span data-ret-amt data-m="997" data-mfree="0" data-vik="1" style="font-size:40px;font-weight:700;color:#fff;letter-spacing:-1px">$997</span><span style="font-size:15px;color:rgba(255,255,255,0.4)">/mo</span></div><span data-ret-was style="display:none;font-size:13.5px;color:rgba(255,255,255,0.35);text-decoration:line-through">$997/mo</span></div>
+          <div data-ret-sub style="display:none;font-size:12.5px;color:rgba(255,255,255,0.6);margin-top:8px;line-height:1.5"></div>
           <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px">Best for: Custom builds that need growth run end-to-end</div>
         </div>
         <div style="height:1px;background:rgba(255,255,255,0.07)"></div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Everything in Growth, plus:</span></div>
+          <div data-vik-rows style="display:none;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;font-weight:700;color:#00D4A4">Month-one content engine setup &mdash; 90-day content calendar, UGC templates &amp; brand-voice doc</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;font-weight:700;color:#00D4A4">Quarterly strategy sessions with your account lead</span></div>
+          </div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">~8 ready-to-use social posts/mo you can publish</span></div>
-          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Review generation &amp; AI-assisted replies — requested automatically, drafted for your approval</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Reputation Engine included ($197/mo value) — automated review requests &amp; AI-drafted replies</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Monthly CRO review + 1 improvement</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Priority support — 1 business day</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Monthly email newsletter to your list</span></div>
@@ -584,7 +604,7 @@ h2{font-size:30px!important;letter-spacing:-0.6px!important}
       <div style="text-align:center;margin-bottom:40px">
         <span style="display:block;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#00D4A4;margin-bottom:12px">Bolt-on growth</span>
         <h3 style="font-size:30px;font-weight:600;color:#fff;letter-spacing:-0.6px;margin-bottom:14px">Add a growth engine to any plan</h3>
-        <p style="font-size:16px;color:rgba(255,255,255,0.5);max-width:580px;margin:0 auto;line-height:1.65">Your retainer keeps the site healthy. These optional add-ons turn it into a lead machine — bolt any of them onto Care, Growth, or Partner.</p>
+        <p style="font-size:16px;color:rgba(255,255,255,0.5);max-width:580px;margin:0 auto;line-height:1.65">Your retainer keeps the site healthy. These optional add-ons turn it into a lead machine — bolt them onto Care or Growth. The Reputation Engine is already included with Partner.</p>
       </div>
       <div class="cc-addon-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:860px;margin:0 auto">
         <!-- AI Concierge -->
@@ -602,7 +622,7 @@ h2{font-size:30px!important;letter-spacing:-0.6px!important}
             <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Bot monitoring across web, IG, WhatsApp &amp; SMS</span></div>
             <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Monthly prompt &amp; flow tuning from real chats</span></div>
             <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Human-handoff rules kept up to date</span></div>
-            <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Booking upkeep — appointment reminders &amp; no-show recovery</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Bot booking flows — appointment reminders &amp; no-show recovery</span></div>
             <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">WhatsApp / SMS message costs passed through at cost</span></div>
           </div>
           <div style="font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;margin-top:auto">Requires the one-time <a href="#estimator" style="color:#00D4A4;text-decoration:none">AI Concierge Setup</a> (build the bot first).</div>
@@ -625,7 +645,7 @@ h2{font-size:30px!important;letter-spacing:-0.6px!important}
             <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Competitor review monitoring</span></div>
             <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Lead-nurture follow-ups for cold inquiries</span></div>
           </div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;margin-top:auto">Includes a monthly reputation snapshot in your dashboard.</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;margin-top:auto">Includes a monthly reputation snapshot in your dashboard. Already included with the Partner retainer.</div>
           <a href="../contact/?service=custom_enterprise" class="cc-cta-soft" style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,0.07);color:#fff;padding:14px;border-radius:9999px;font-size:14px;font-weight:600;border:1px solid rgba(255,255,255,0.12)">Add Reputation Engine</a>
         </div>
       </div>
@@ -1096,6 +1116,57 @@ class Component extends DCLogic {
           window.scrollTo({ top: top, behavior: 'smooth' });
         });
       }
+    }
+
+    // ---- Retainer billing switch (Monthly / Annual) ----
+    const billSwitch = document.getElementById('cc-bill-switch');
+    if (billSwitch) {
+      const knob = billSwitch.querySelector('[data-knob]');
+      const mLab = document.getElementById('cc-bill-m-lab');
+      const aLab = document.getElementById('cc-bill-a-lab');
+      const amts = Array.from(document.querySelectorAll('#cc-ret-pane [data-ret-amt]'));
+      const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+      let annual = true;
+      const paint = () => {
+        billSwitch.setAttribute('aria-checked', annual ? 'true' : 'false');
+        billSwitch.style.background = annual ? '#00D4A4' : '#161B22';
+        billSwitch.style.borderColor = annual ? '#00D4A4' : 'rgba(255,255,255,0.18)';
+        knob.style.transform = annual ? 'translateX(26px)' : 'translateX(0)';
+        knob.style.background = annual ? '#0D1117' : '#fff';
+        if (mLab) mLab.style.color = annual ? 'rgba(255,255,255,0.45)' : '#fff';
+        if (aLab) aLab.style.color = annual ? '#fff' : 'rgba(255,255,255,0.45)';
+        amts.forEach(amt => {
+          const m = +amt.dataset.m, free = +amt.dataset.mfree;
+          const card = amt.closest('.cc-tier');
+          const was = card && card.querySelector('[data-ret-was]');
+          const sub = card && card.querySelector('[data-ret-sub]');
+          if (annual) {
+            if (amt.dataset.vik) {
+              amt.textContent = fmt(m);
+              if (was) was.style.display = 'none';
+              if (sub) { sub.innerHTML = fmt(m * 12) + ' billed yearly &middot; full price, more included'; sub.style.display = 'block'; }
+              const vr = card && card.querySelector('[data-vik-rows]'); if (vr) vr.style.display = 'flex';
+            } else if (amt.dataset.am) {
+              const eff = +amt.dataset.am, bill = eff * 12, save = m * 12 - bill;
+              amt.textContent = fmt(eff);
+              if (was) { was.textContent = fmt(m) + '/mo'; was.style.display = 'inline'; }
+              if (sub) { sub.innerHTML = fmt(bill) + ' billed yearly &middot; <span style="color:#00D4A4;font-weight:600">save ' + fmt(save) + '/yr</span>'; sub.style.display = 'block'; }
+            } else {
+              const bill = m * (12 - free), eff = Math.round(bill / 12), save = m * 12 - bill;
+              amt.textContent = fmt(eff);
+              if (was) { was.textContent = fmt(m) + '/mo'; was.style.display = 'inline'; }
+              if (sub) { sub.innerHTML = fmt(bill) + ' billed yearly &middot; <span style="color:#00D4A4;font-weight:600">save ' + fmt(save) + '/yr</span>'; sub.style.display = 'block'; }
+            }
+          } else {
+            amt.textContent = fmt(m);
+            if (was) was.style.display = 'none';
+            if (sub) sub.style.display = 'none';
+            const vr0 = card && card.querySelector('[data-vik-rows]'); if (vr0) vr0.style.display = 'none';
+          }
+        });
+      };
+      billSwitch.addEventListener('click', () => { annual = !annual; paint(); });
+      paint();
     }
 
     // ---- Quote estimator ----
