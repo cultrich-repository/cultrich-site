@@ -579,7 +579,7 @@ h2{font-size:30px!important;letter-spacing:-0.6px!important}
             <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;font-weight:700;color:#00D4A4">Month-one content engine setup &mdash; 90-day content calendar, UGC templates &amp; brand-voice doc</span></div>
             <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;font-weight:700;color:#00D4A4">Quarterly strategy sessions with your account lead</span></div>
           </div>
-          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">~8 ready-to-use social posts/mo you can publish</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span data-social-posts="" style="font-size:14px;color:rgba(255,255,255,0.72)">~8 ready-to-use social posts/mo you can publish</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.72)">Reputation Engine included ($197/mo value) — automated review requests &amp; AI-drafted replies</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Monthly CRO review + 1 improvement</span></div>
           <div style="display:flex;gap:10px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D4A4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.65)">Priority support — 1 business day</span></div>
@@ -1146,6 +1146,7 @@ class Component extends DCLogic {
               if (was) was.style.display = 'none';
               if (sub) { sub.innerHTML = fmt(m * 12) + ' billed yearly &middot; full price, more included'; sub.style.display = 'block'; }
               const vr = card && card.querySelector('[data-vik-rows]'); if (vr) vr.style.display = 'flex';
+              const sp = card && card.querySelector('[data-social-posts]'); if (sp) sp.innerHTML = '~8 ready-to-use social posts/mo you can publish';
             } else if (amt.dataset.am) {
               const eff = +amt.dataset.am, bill = eff * 12, save = m * 12 - bill;
               amt.textContent = fmt(eff);
@@ -1162,6 +1163,7 @@ class Component extends DCLogic {
             if (was) was.style.display = 'none';
             if (sub) sub.style.display = 'none';
             const vr0 = card && card.querySelector('[data-vik-rows]'); if (vr0) vr0.style.display = 'none';
+            const sp0 = card && card.querySelector('[data-social-posts]'); if (sp0) sp0.innerHTML = '4 ready-to-use social posts/mo you can publish <span style="color:#00D4A4;font-weight:600">(&times;2 on the annual plan)</span>';
           }
         });
       };
